@@ -14,7 +14,9 @@ var {
   Text,
   View,
 } = React;
+
 var $ = require('jquery');
+var DeviceUUID = require("react-native-device-uuid");
 
 // Movie Fetch Request
 var MOVIE_API_URL = 'http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json';
@@ -68,7 +70,7 @@ var AwesomeProject = React.createClass({
       .done();
   },
   componentDidMount: function() {
-    // get my location
+    // get user's location
     navigator.geolocation.getCurrentPosition(
       (initialPosition) => this.setState({initialPosition}),
       (error) => alert(error.message),
@@ -87,19 +89,25 @@ var AwesomeProject = React.createClass({
   postTriggerToOoh: function(movie) {
     var lastCoords = this.state.lastPosition.coords;
 
-    // add UUID of phone
-    var payload = {
-      userLocation: { 
-        lat: lastCoords.latitude,
-        long: lastCoords.longitude
-      },
-      movieId: movie.id
-    };
+    DeviceUUID.getUUID().then((uuid) => {
+      var payload = {
+        user: {
+          deviceUuid: uuid,
+          location: { 
+            lat: lastCoords.latitude,
+            long: lastCoords.longitude
+          }
+        },
+        movieId: movie.id
+      };
+
+      if (amcOffersDiscountOn(movie.id)) {
+        alert(JSON.stringify(payload));
+      }
+    });
 
     // Check if AMC is offering discount on movie
     // This logic could technically live in OOH Offers
-    if (amcOffersDiscountOn(movie.id)) {
-      alert(JSON.stringify(payload));
 
       // // OOH OFFERS TRIGGER POST REQUEST
       // // 1. Look for movie theatres in my area specific to provider
@@ -108,7 +116,6 @@ var AwesomeProject = React.createClass({
       // $.post(OOH_POST_URL, function(responseData) {
       //   alert(currentTarget + responseData);
       // });
-    }
 
   },
   _onPressButton: function(movie) {
