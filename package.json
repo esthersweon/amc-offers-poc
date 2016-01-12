@@ -8,6 +8,7 @@
   "dependencies": {
     "jquery": "^2.1.4",
     "react-native": "^0.14.2",
-    "react-native-device-uuid": "lazywei/react-native-device-uuid"
+    "react-native-device-uuid": "lazywei/react-native-device-uuid",
+    "react-native-camera": "https://github.com/bheithaus/react-native-camera.git"
   }
 }
