@@ -32,7 +32,7 @@ var StudiesList = React.createClass({
   },
   fetchData: function() {
     if (this.props.url === 'current') {
-      // Following code should be replaced with API call for current studys
+      // Following code should be replaced with API call for current studies
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows([
           {
@@ -49,7 +49,7 @@ var StudiesList = React.createClass({
         loaded: true
       });
     } else {
-      // Following code should be replaced with API call for other studys
+      // Following code should be replaced with API call for other studies
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows([
           {
@@ -96,17 +96,6 @@ var StudiesList = React.createClass({
   }
 });
 
-var HomeScreen = React.createClass({
-  render: function() {
-    return (
-      <View>
-        <StudiesList url={'current'} style={styles.container} />
-        <StudiesList url={'other'} style={styles.container} />
-      </View>
-    );
-  }
-});
-
 var styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -124,4 +113,4 @@ var styles = StyleSheet.create({
     }
 });
 
-module.exports = HomeScreen;
+module.exports = StudiesList;

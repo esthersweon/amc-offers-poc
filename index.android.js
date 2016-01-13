@@ -15,8 +15,8 @@ var {
   Text
 } = React;
 
-var HomeScreen = require('./react_components/HomeScreen');
-var VideoScreen = require('./react_components/VideoScreen');
+var StudiesScreen = require('./components/StudiesScreen');
+var VideoScreen = require('./components/VideoScreen');
 
 var _navigator;
 BackAndroid.addEventListener('hardwareBackPress', () => {
@@ -31,7 +31,7 @@ var routeMapper = function (route, navigator) {
   _navigator = navigator;
   if (route.name == 'home') {
     return(
-        <HomeScreen 
+        <StudiesScreen 
             name={route.name}
             navigator={navigator}/>
     );
@@ -66,7 +66,7 @@ var MindSwarmsApp = React.createClass({
         //     configureScene={() => Navigator.SceneConfigs.FadeAndroid}
         //     renderScene={ routeMapper } />
         // );
-        return <HomeScreen />
+        return <StudiesScreen />
     }
 });
 
