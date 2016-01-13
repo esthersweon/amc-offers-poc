@@ -15,9 +15,9 @@ var {
   Text
 } = React;
 
-var StudiesScreen = require('./components/StudiesScreen');
-var QuestionScreen = require('./components/QuestionScreen');
-var VideoRecordingScreen = require('./components/VideoRecordingScreen');
+var StudiesScreen = require('./react_components/StudiesScreen');
+var QuestionScreen = require('./react_components/QuestionScreen');
+var VideoRecordingScreen = require('./react_components/VideoRecordingScreen');
 
 var _navigator;
 BackAndroid.addEventListener('hardwareBackPress', () => {
