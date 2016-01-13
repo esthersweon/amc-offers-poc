@@ -16,7 +16,7 @@ var {
 } = React;
 
 var StudiesScreen = require('./components/StudiesScreen');
-var VideoScreen = require('./components/VideoScreen');
+var VideoRecordingScreen = require('./components/VideoRecordingScreen');
 
 var _navigator;
 BackAndroid.addEventListener('hardwareBackPress', () => {
@@ -42,7 +42,7 @@ var routeMapper = function (route, navigator) {
                 actions={[]}
                 onIconClicked={navigator.pop}
                 style={styles.toolbar} />
-            <VideoScreen
+            <VideoRecordingScreen
                 style={{flex: 1}}
                 name={route.name} />
         </View>

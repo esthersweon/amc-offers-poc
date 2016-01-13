@@ -15,7 +15,7 @@ var {
 } = React;
 
 
-var VideoScreen = React.createClass({
+var VideoRecordingScreen = React.createClass({
     getInitialState: function() {
         return ({
             capturedBase64: '',
@@ -90,4 +90,4 @@ var styles = StyleSheet.create({
 });
 
 
-module.exports = VideoScreen;
+module.exports = VideoRecordingScreen;
