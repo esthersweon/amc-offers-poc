@@ -7,12 +7,13 @@ var {
   ListView,
   Platform,
   ProgressBarAndroid,
-  StyleSheet,
   Image,
   Text,
   View,
   TouchableHighlight
 } = React;
+
+var styles = require('../../Styles');
 
 var StudyCompleteScreen = React.createClass({
   getInitialState: function() {
@@ -50,17 +51,5 @@ var StudyCompleteScreen = React.createClass({
 		);
 	}
 });
-
-
-
-var styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF'
-    }
-});
-
 
 module.exports = StudyCompleteScreen;

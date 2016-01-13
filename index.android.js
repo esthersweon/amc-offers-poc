@@ -15,7 +15,8 @@ var {
   Text
 } = React;
 
-var WelcomeSplashScreen = require('./react_components/screens/WelcomeSplashScreen'),
+var styles = require('./Styles'),
+    WelcomeSplashScreen = require('./react_components/screens/WelcomeSplashScreen'),
     StudiesScreen = require('./react_components/screens/StudiesScreen'),
     QuestionScreen = require('./react_components/screens/QuestionScreen'),
     VideoRecordingScreen = require('./react_components/screens/VideoRecordingScreen'), 
@@ -69,22 +70,8 @@ var MindSwarmsApp = React.createClass({
         //     configureScene={() => Navigator.SceneConfigs.FadeAndroid}
         //     renderScene={ routeMapper } />
         // );
-        return <StudyCompletedScreen />
+        return <WelcomeSplashScreen />
     }
 });
-
-var styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF'
-    },
-    toolbar: {
-        backgroundColor: '#a9a9a9',
-        height: 56,
-    }
-});
-
 
 AppRegistry.registerComponent('AwesomeProject', () => MindSwarmsApp);

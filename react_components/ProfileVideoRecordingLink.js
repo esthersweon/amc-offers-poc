@@ -7,17 +7,18 @@ var {
   ListView,
   Platform,
   ProgressBarAndroid,
-  StyleSheet,
   Image,
   Text,
   View,
   TouchableHighlight
 } = React;
 
+var styles = require('../Styles');
+
 var ProfileVideoRecordingLink = React.createClass({
 	render: function() {
 		return (
-			<View>
+			<View style={ styles.container }>
 				<Text>Record your video!</Text>
 			</View>
 		);

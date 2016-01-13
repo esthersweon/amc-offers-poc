@@ -4,13 +4,14 @@ var React = require('react-native');
 var {
   ListView,
   Platform,
-  StyleSheet,
   Text,
   View
 } = React;
 
-var ProfileVideoRecordingLink = require('../ProfileVideoRecordingLink');
-var StudiesList = require('../StudiesList');
+var styles = require('../../Styles');
+
+var ProfileVideoRecordingLink = require('../ProfileVideoRecordingLink'),
+    StudiesList = require('../StudiesList');
 
 var StudiesScreen = React.createClass({
   getInitialState: function() {
@@ -28,15 +29,6 @@ var StudiesScreen = React.createClass({
       </View>
     );
   }
-});
-
-var styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF'
-    }
 });
 
 module.exports = StudiesScreen;

@@ -7,12 +7,13 @@ var {
   ListView,
   Platform,
   ProgressBarAndroid,
-  StyleSheet,
   Image,
   Text,
   View,
   TouchableHighlight
 } = React;
+
+var styles = require('../../Styles');
 
 var QuestionScreen = React.createClass({
   getInitialState: function() {
@@ -80,21 +81,6 @@ var QuestionScreen = React.createClass({
 			</View>
 		);
 	}
-});
-
-
-
-var styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF'
-    }, 
-    listView: {
-      paddingTop: 20,
-      backgroundColor: '#F5FCFF',
-    }
 });
 
 

@@ -4,10 +4,11 @@ var React = require('react-native');
 var {
   ListView,
   Platform,
-  StyleSheet,
   Text,
   View
 } = React;
+
+var styles = require('../Styles');
 
 var StudiesList = React.createClass({
   getInitialState: function() {
@@ -92,23 +93,6 @@ var StudiesList = React.createClass({
       );
     }
   }
-});
-
-var styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF'
-    },
-    toolbar: {
-        backgroundColor: '#a9a9a9',
-        height: 56,
-    }, 
-    listView: {
-      paddingTop: 20,
-      backgroundColor: '#F5FCFF',
-    }
 });
 
 module.exports = StudiesList;

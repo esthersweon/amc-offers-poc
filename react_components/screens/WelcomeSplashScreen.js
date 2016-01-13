@@ -7,13 +7,13 @@ var {
   ListView,
   Platform,
   ProgressBarAndroid,
-  StyleSheet,
   Image,
   Text,
   View,
   TouchableHighlight
 } = React;
 
+var styles = require('../../Styles');
 
 var WelcomeSplashScreen = React.createClass({
     render: function() {
@@ -37,19 +37,5 @@ var WelcomeSplashScreen = React.createClass({
         );
     }
 });
-
-
-var styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF'
-    }, 
-    postIt: {
-        backgroundColor: 'lightblue'
-    }
-});
-
 
 module.exports = WelcomeSplashScreen;
