@@ -14,6 +14,10 @@ var {
 } = React;
 
 var styles = require('../../Styles');
+var RecordButtonTexts = {
+    RECORDING_STOPPED: 'Record',
+    RECORDING_STARTED: 'Stop'
+ };
 
 var VideoRecordingScreen = React.createClass({
     getInitialState: function() {
@@ -29,8 +33,6 @@ var VideoRecordingScreen = React.createClass({
         var component = this;
         return (
             <View style={styles.container}>
-                <Text>{ this.props.prompt }</Text>
-
                 <Camera style={styles.camera} ref="cam" type={this.state.type} captureTarget={Camera.constants.CaptureTarget.memory}></Camera>
                 <Image
                     source={{
@@ -40,17 +42,11 @@ var VideoRecordingScreen = React.createClass({
                     style={styles.captured}/>
 
                 <TouchableHighlight style={styles.captureButton} onPress={function() {
-                    component.refs.cam.capture({ sampleSize: 10 }).then(function(capturedBase64) {
-                        component.setState({ capturedBase64 });
-                        setTimeout(() => component.setState({ capturedBase64: '' }), 5000);
+                    component.refs.cam.captureVideo({ sampleSize: 10 }).then(function(recordingMsg) {
+                        component.setState({ recordingMsg });
                     });
                 }}>
-                    <Text style={{textAlign: 'center'}}>Capture</Text>
-                </TouchableHighlight>
-
-
-                <TouchableHighlight style={styles.switchButton} onPress={this.switchCamera}>
-                    <Text style={{textAlign: 'center'}}>Switch</Text>
+                    <Text style={{textAlign: 'center'}}>{ RecordButtonTexts[component.state.recordingMsg] }</Text>
                 </TouchableHighlight>
             </View>
         );
