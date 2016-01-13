@@ -31,6 +31,8 @@ var VideoRecordingScreen = React.createClass({
         var component = this;
         return (
             <View style={styles.container}>
+                <Text>{ this.props.prompt }</Text>
+
                 <Camera style={styles.camera} ref="cam" type={this.state.type} captureTarget={Camera.constants.CaptureTarget.memory}></Camera>
                 <Image
                     source={{
@@ -76,8 +78,8 @@ var styles = StyleSheet.create({
     captureButton: {
         position: 'absolute',
         height: 50,
-        left: 50, bottom: 20, right: 50,
-        backgroundColor: '#FFFFFF',
+        left: 150, bottom: 20, right: 150,
+        backgroundColor: 'red',
         borderRadius: 20,
     },
     switchButton: {

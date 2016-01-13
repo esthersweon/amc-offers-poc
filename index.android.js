@@ -16,6 +16,7 @@ var {
 } = React;
 
 var StudiesScreen = require('./components/StudiesScreen');
+var QuestionScreen = require('./components/QuestionScreen');
 var VideoRecordingScreen = require('./components/VideoRecordingScreen');
 
 var _navigator;
@@ -50,7 +51,7 @@ var routeMapper = function (route, navigator) {
   } else {
     return (
         <View>
-            <Text>siosdh;FKHSDA;LHFK;LASH;KL</Text>
+            <Text>MindSwarms App is not working properly.</Text>
         </View>
     );
   }

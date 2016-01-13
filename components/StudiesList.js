@@ -70,10 +70,8 @@ var StudiesList = React.createClass({
   renderStudy: function(study) {
     return (
       <View style={styles.container}>
-        <View>
-          <Text>{study.name}</Text>
-          <Text>{study.duration + ' weeks'}</Text>
-        </View>
+        <Text>{study.name}</Text>
+        <Text>{study.duration + ' weeks'}</Text>
       </View>
     );
   },
