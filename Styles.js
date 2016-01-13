@@ -46,4 +46,4 @@ var styles = StyleSheet.create({
     }
 });
 
-module.exports = Styles;
+module.exports = styles;
