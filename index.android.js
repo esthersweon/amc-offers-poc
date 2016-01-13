@@ -70,7 +70,7 @@ var MindSwarmsApp = React.createClass({
         //     configureScene={() => Navigator.SceneConfigs.FadeAndroid}
         //     renderScene={ routeMapper } />
         // );
-        return <WelcomeSplashScreen />
+        return <VideoRecordingScreen />
     }
 });
 

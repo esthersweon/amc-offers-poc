@@ -23,6 +23,7 @@ var VideoRecordingScreen = React.createClass({
     getInitialState: function() {
         return ({
             capturedBase64: '',
+            recordingMsg: 'RECORDING_STOPPED',
             type: Camera.constants.Type.back
         });
     },
