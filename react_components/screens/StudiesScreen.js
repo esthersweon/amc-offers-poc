@@ -9,8 +9,8 @@ var {
   View
 } = React;
 
-var ProfileVideoRecordingLink = require('./ProfileVideoRecordingLink');
-var StudiesList = require('./StudiesList');
+var ProfileVideoRecordingLink = require('../ProfileVideoRecordingLink');
+var StudiesList = require('../StudiesList');
 
 var StudiesScreen = React.createClass({
   getInitialState: function() {
