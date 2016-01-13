@@ -15,6 +15,7 @@ var {
   Text
 } = React;
 
+var WelcomeSplashScreen = require('./react_components/WelcomeSplashScreen');
 var StudiesScreen = require('./react_components/StudiesScreen');
 var QuestionScreen = require('./react_components/QuestionScreen');
 var VideoRecordingScreen = require('./react_components/VideoRecordingScreen');
