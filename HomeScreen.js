@@ -1,0 +1,127 @@
+'use strict';
+
+var React = require('react-native');
+var {
+  ListView,
+  Platform,
+  StyleSheet,
+  Text,
+  View
+} = React;
+
+var StudiesList = React.createClass({
+  getInitialState: function() {
+    return {
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 !== row2
+      }),
+      loaded: false
+    }
+  },
+  componentDidMount: function() {
+    setTimeout(this.fetchData, 500);
+  },
+  renderLoadingView: function() {
+    return (
+      <View style={styles.container}>
+        <Text>
+          Loading Studies...
+        </Text>
+      </View>
+    );
+  },
+  fetchData: function() {
+    if (this.props.url === 'current') {
+      // Following code should be replaced with API call for current studys
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows([
+          {
+            "name": "A Study",
+            "duration": 53
+          }, {
+            "name": "B Study",
+            "duration": 32
+          }, {
+            "name": "C Study",
+            "duration": 17
+          }
+        ]),
+        loaded: true
+      });
+    } else {
+      // Following code should be replaced with API call for other studys
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows([
+          {
+            "name": "D Study",
+            "duration": 13
+          }, {
+            "name": "E Study",
+            "duration": 52
+          }, {
+            "name": "F Study",
+            "duration": 10
+          }
+        ]),
+        loaded: true
+      });
+    }
+  },
+  renderStudy: function(study) {
+    return (
+      <View style={styles.container}>
+        <View>
+          <Text>{study.name}</Text>
+          <Text>{study.duration + ' weeks'}</Text>
+        </View>
+      </View>
+    );
+  },
+  render: function() {
+    if (!this.state.loaded) {
+      return this.renderLoadingView();
+    } else {
+      var listViewTitle = this.props.url === 'current' ? 'Current Studies' : 'Other';
+
+      return(
+        <View>
+          <Text>{ listViewTitle }</Text>
+          <ListView 
+            dataSource={this.state.dataSource}
+            renderRow={this.renderStudy}
+            style={styles.listView} />
+        </View>
+      );
+    }
+  }
+});
+
+var HomeScreen = React.createClass({
+  render: function() {
+    return (
+      <View>
+        <StudiesList url={'current'} style={styles.container} />
+        <StudiesList url={'other'} style={styles.container} />
+      </View>
+    );
+  }
+});
+
+var styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF'
+    },
+    toolbar: {
+        backgroundColor: '#a9a9a9',
+        height: 56,
+    }, 
+    listView: {
+      paddingTop: 20,
+      backgroundColor: '#F5FCFF',
+    }
+});
+
+module.exports = HomeScreen;

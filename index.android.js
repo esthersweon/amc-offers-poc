@@ -7,54 +7,66 @@
 var React = require('react-native');
 var {
   AppRegistry,
+  BackAndroid,
+  Navigator,
   StyleSheet,
-  Text,
+  ToolbarAndroid,
   View,
-  Image,
-  TouchableHighlight
+  Text
 } = React;
 
-var Camera = require('react-native-camera'); //require the camera component
+var HomeScreen = require('./HomeScreen');
+var VideoScreen = require('./VideoScreen');
 
-var ReactNativeCameraExample = React.createClass({
-    getInitialState: function() {
-        return ({
-            capturedBase64: '',
-            type: Camera.constants.Type.back
-        });
-    },
+var _navigator;
+BackAndroid.addEventListener('hardwareBackPress', () => {
+  if (_navigator && _navigator.getCurrentRoutes().length > 1) {
+    _navigator.pop();
+    return true;
+  }
+  return false;
+});
 
-    switchCamera: function() {
-        this.setState({ type: this.state.type === Camera.constants.Type.back ? Camera.constants.Type.front : Camera.constants.Type.back });
-    },
+var routeMapper = function (route, navigator) {
+  _navigator = navigator;
+  if (route.name == 'home') {
+    return(
+        <HomeScreen 
+            name={route.name}
+            navigator={navigator}/>
+    );
+  } else if (route.name == 'video') {
+    return(
+        <View style={{flex: 1}}>
+            <ToolbarAndroid
+                actions={[]}
+                onIconClicked={navigator.pop}
+                style={styles.toolbar} />
+            <VideoScreen
+                style={{flex: 1}}
+                name={route.name} />
+        </View>
+    );
+  } else {
+    return (
+        <View>
+            <Text>siosdh;FKHSDA;LHFK;LASH;KL</Text>
+        </View>
+    );
+  }
+};
 
+var MindSwarmsProject = React.createClass({
     render: function() {
-        var component = this;
-        return (
-            <View style={styles.container}>
-                <Camera style={styles.camera} ref="cam" type={this.state.type} captureTarget={Camera.constants.CaptureTarget.memory}></Camera>
-                <Image
-                    source={{
-                        isStatic: true,
-                        uri: 'data:image/jpeg;base64,' + component.state.capturedBase64,
-                    }}
-                    style={styles.captured}/>
-
-                <TouchableHighlight style={styles.captureButton} onPress={function() {
-                    component.refs.cam.capture({ sampleSize: 10 }).then(function(capturedBase64) {
-                        component.setState({ capturedBase64 });
-                        setTimeout(() => component.setState({ capturedBase64: '' }), 5000);
-                    });
-                }}>
-                    <Text style={{textAlign: 'center'}}>Capture</Text>
-                </TouchableHighlight>
-
-
-                <TouchableHighlight style={styles.switchButton} onPress={this.switchCamera}>
-                    <Text style={{textAlign: 'center'}}>Switch</Text>
-                </TouchableHighlight>
-            </View>
-        );
+        // var initialRoute = {name: 'home'};
+        // return (
+        //   <Navigator
+        //     style={styles.container}
+        //     initialRoute={initialRoute}
+        //     configureScene={() => Navigator.SceneConfigs.FadeAndroid}
+        //     renderScene={ routeMapper } />
+        // );
+        return <HomeScreen />
     }
 });
 
@@ -65,29 +77,11 @@ var styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#F5FCFF'
     },
-    camera: {
-        position: 'absolute',
-        top: 0, right: 0, bottom: 0, left: 0
-    },
-    captured: {
-        width: 200,
-        height: 400
-    },
-    captureButton: {
-        position: 'absolute',
-        height: 50,
-        left: 50, bottom: 20, right: 50,
-        backgroundColor: '#FFFFFF',
-        borderRadius: 20,
-    },
-    switchButton: {
-        position: 'absolute',
-        height: 50,
-        left: 50, top: 20, right: 50,
-        backgroundColor: '#FFFFFF',
-        borderRadius: 20,
-    },
+    toolbar: {
+        backgroundColor: '#a9a9a9',
+        height: 56,
+    }
 });
 
 
-AppRegistry.registerComponent('AwesomeProject', () => ReactNativeCameraExample);
+AppRegistry.registerComponent('MindSwarmsProject', () => MindSwarmsProject);
