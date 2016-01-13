@@ -15,8 +15,8 @@ var {
   Text
 } = React;
 
-var HomeScreen = require('./HomeScreen');
-var VideoScreen = require('./VideoScreen');
+var HomeScreen = require('./react_components/HomeScreen');
+var VideoScreen = require('./react_components/VideoScreen');
 
 var _navigator;
 BackAndroid.addEventListener('hardwareBackPress', () => {
@@ -56,7 +56,7 @@ var routeMapper = function (route, navigator) {
   }
 };
 
-var MindSwarmsProject = React.createClass({
+var MindSwarmsApp = React.createClass({
     render: function() {
         // var initialRoute = {name: 'home'};
         // return (
@@ -84,4 +84,4 @@ var styles = StyleSheet.create({
 });
 
 
-AppRegistry.registerComponent('MindSwarmsProject', () => MindSwarmsProject);
+AppRegistry.registerComponent('AwesomeProject', () => MindSwarmsApp);
