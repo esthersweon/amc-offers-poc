@@ -14,6 +14,7 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.io.IOException;
 import android.os.Bundle;
+import android.os.AsyncTask;
 
 import android.util.Base64;
 import android.widget.Toast;
@@ -31,13 +32,13 @@ import java.io.ByteArrayOutputStream;
 import java.util.Map;
 import java.util.HashMap;
 
-
 public class ReactCameraModule extends ReactContextBaseJavaModule {
     ReactApplicationContext reactContext;
     
     public static final int MEDIA_TYPE_IMAGE = 1;
     public static final int MEDIA_TYPE_VIDEO = 2;
     private static final String TAG = "ReactCameraModule";
+    private static final int QUALITY_SETTING = CamcorderProfile.QUALITY_LOW;
 
     public ReactCameraModule(ReactApplicationContext reactContext, CameraInstanceManager cameraInstanceManager) {
         super(reactContext);
@@ -71,16 +72,47 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
     public void captureVideo(ReadableMap options, final Callback callback) {
         mCamera = cameraInstanceManager.getCamera(options.getString("type"));
 
+        Log.d(TAG, "isRecording : " + isRecording);
         if (isRecording) {
-            // stop recording and release camera
-            mMediaRecorder.stop();  // stop the recording
-            releaseMediaRecorder(); // release the MediaRecorder object
-            mCamera.lock();         // take camera access back from MediaRecorder
+            new Thread("START RECORDER") {
+                public void run () {
+                    try {
+                        Log.d(TAG, "MediaRecorder STOP");
+
+                        mMediaRecorder.stop();  // stop the recording
+                        Log.d(TAG, "MediaRecorder RELEASE");
+                        releaseMediaRecorder(); // release the MediaRecorder object
+                    } catch (RuntimeException stopException) {
+                        Log.d(TAG, "MediaRecorder error :" + stopException);
+                        // cleanup here
+                        
+                    }
+                }
+            }.start();
+
+            // releaseCamera();
 
             isRecording = false;
             // inform the user that recording has stopped
             callback.invoke("RECORDING_STOPPED");
         } else {
+            new MediaPrepareTask(callback).execute(null, null, null);
+        }
+    }
+
+    /**
+     * Asynchronous task for preparing the {@link android.media.MediaRecorder} since it's a long blocking
+     * operation.
+     */
+    class MediaPrepareTask extends AsyncTask<Void, Void, Boolean> {
+        Callback callback;
+
+        public MediaPrepareTask(Callback callback) {
+            this.callback = callback;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
             // initialize video camera
             if (prepareVideoRecorder()) {
                 // Camera is available and unlocked, MediaRecorder is prepared,
@@ -88,14 +120,24 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
                 mMediaRecorder.start();
 
                 isRecording = true;
-                // inform the user that recording has started
-                callback.invoke("RECORDING_STARTED");
             } else {
                 // prepare didn't work, release the camera
                 releaseMediaRecorder();
                 // inform user
                 callback.invoke("RECORDING_ERROR");
+                return false;
             }
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if (!result) {
+                // TODO what to do here?
+                // MainActivity.this.finish();
+            }
+            // inform the user that recording has started
+            callback.invoke("RECORDING_STARTED");
         }
     }
 
@@ -139,7 +181,7 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
     }
 
     private CameraInstanceManager cameraInstanceManager;
-    private boolean isRecording = false;
+    private boolean isRecording;
     private Camera mCamera;
     private MediaRecorder mMediaRecorder;
 
@@ -160,6 +202,8 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
     }
 
     private boolean prepareVideoRecorder(){
+        mCamera.setDisplayOrientation(90);
+
         mMediaRecorder = new MediaRecorder();
 
         // Step 1: Unlock and set camera to MediaRecorder
@@ -171,7 +215,9 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
         mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 
         // Step 3: Set a CamcorderProfile (requires API Level 8 or higher)
-        mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
+        mMediaRecorder.setProfile(CamcorderProfile.get(QUALITY_SETTING));
+
+        mMediaRecorder.setOrientationHint(90);
 
         // Step 4: Set output file
         mMediaRecorder.setOutputFile(getOutputMediaFile(MEDIA_TYPE_VIDEO).toString());
