@@ -125,7 +125,7 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
 
         Log.d(TAG, "isRecording : " + isRecording);
         if (isRecording) {
-            MediaStopTask(callback).execute(null, null, null);
+            new MediaStopTask(callback).execute(null, null, null);
         } else {
             new MediaPrepareTask(callback).execute(null, null, null);
         }
@@ -144,26 +144,25 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
         @Override
         protected Boolean doInBackground(Void... voids) {
             try {
-                Log.d(TAG, "MediaRecorder STOP");
                 mMediaRecorder.stop(); 
-
-                Log.d(TAG, "MediaRecorder RELEASE");
-                releaseMediaRecorder(); 
+                releaseMediaRecorder();
+                releaseCamera();
                 return true;
             } catch (RuntimeException stopException) {
                 Log.d(TAG, "MediaRecorder error :" + stopException);
+                releaseMediaRecorder();
+                releaseCamera();
                 return false;
             }
         }
 
         @Override
-        protected void onPostExecute(Boolean result) {
-            if (!result) {
-                // TODO what to do here?
-                // MainActivity.this.finish();
+        protected void onPostExecute(Boolean success) {
+            if (success) {
+                isRecording = false;
+                callback.invoke("RECORDING_STOPPED");
+                // MainActivity.this.finish(); ???
             }
-            isRecording = false;
-            callback.invoke("RECORDING_STOPPED");
         }
     }
 
@@ -179,17 +178,11 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
 
         @Override
         protected Boolean doInBackground(Void... voids) {
-            // initialize video camera
             if (prepareVideoRecorder()) {
-                // Camera is available and unlocked, MediaRecorder is prepared,
-                // now you can start recording
                 mMediaRecorder.start();
-
-                isRecording = true;
             } else {
-                // prepare didn't work, release the camera
                 releaseMediaRecorder();
-                // inform user
+                releaseCamera();
                 callback.invoke("RECORDING_ERROR");
                 return false;
             }
@@ -197,13 +190,12 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
         }
 
         @Override
-        protected void onPostExecute(Boolean result) {
-            if (!result) {
-                // TODO what to do here?
-                // MainActivity.this.finish();
+        protected void onPostExecute(Boolean success) {
+            if (success) {
+                isRecording = true;
+                callback.invoke("RECORDING_STARTED");
+                // MainActivity.this.finish(); ???
             }
-            // inform the user that recording has started
-            callback.invoke("RECORDING_STARTED");
         }
     }
 
