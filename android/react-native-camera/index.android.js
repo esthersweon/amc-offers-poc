@@ -84,7 +84,7 @@ var ReactCameraViewWrapper = React.createClass({
         );
     },
 
-    capture (options, callback) {
+    capturePicture (options, callback) {
         var component = this;
         var defaultOptions = {
             type: component.props.type,
@@ -109,6 +109,7 @@ var ReactCameraViewWrapper = React.createClass({
         var component = this;
         var defaultOptions = {
             type: component.props.type,
+            directory: component.props.directory,
             target: component.props.captureTarget,
             sampleSize: 0,
             title: '',

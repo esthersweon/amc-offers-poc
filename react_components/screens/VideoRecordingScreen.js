@@ -24,7 +24,8 @@ var VideoRecordingScreen = React.createClass({
         return ({
             capturedBase64: '',
             recordingMsg: 'RECORDING_STOPPED',
-            type: Camera.constants.Type.back
+            type: Camera.constants.Type.back, 
+            directory: "MindSwarms"
         });
     },
     switchCamera: function() {
@@ -34,7 +35,7 @@ var VideoRecordingScreen = React.createClass({
         var component = this;
         return (
             <View style={styles.container}>
-                <Camera style={styles.camera} ref="cam" type={this.state.type} captureTarget={Camera.constants.CaptureTarget.memory}></Camera>
+                <Camera style={styles.camera} ref="cam" type={this.state.type} directory={ this.state.directory } captureTarget={Camera.constants.CaptureTarget.memory}></Camera>
                 <Image
                     source={{
                         isStatic: true,
