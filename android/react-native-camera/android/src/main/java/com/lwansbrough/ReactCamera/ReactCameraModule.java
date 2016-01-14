@@ -149,12 +149,15 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
                 return true;
             } catch (RuntimeException stopException) {
                 Log.d(TAG, "MediaRecorder error :" + stopException);
+                releaseMediaRecorder();
                 return false;
             }
         }
 
         @Override
         protected void onPostExecute(Boolean success) {
+            releaseCamera();
+
             if (success) {
                 isRecording = false;
                 callback.invoke("RECORDING_STOPPED");
@@ -179,6 +182,7 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
                 mMediaRecorder.start();
             } else {
                 releaseMediaRecorder();
+                releaseCamera();
                 callback.invoke("RECORDING_ERROR");
                 return false;
             }
