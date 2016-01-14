@@ -49,6 +49,7 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
         super(reactContext);
         this.reactContext = reactContext;
         this.cameraInstanceManager = cameraInstanceManager;
+        this.mCamera = cameraInstanceManager.getCamera(options.getString("type"));
     }
 
     @Override
@@ -121,8 +122,6 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void captureVideo(ReadableMap options, final Callback callback) {
-        mCamera = cameraInstanceManager.getCamera(options.getString("type"));
-
         Log.d(TAG, "isRecording : " + isRecording);
         if (isRecording) {
             new MediaStopTask(callback).execute(null, null, null);
