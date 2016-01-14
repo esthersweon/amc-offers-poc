@@ -22,33 +22,31 @@ var RecordButtonTexts = {
 var VideoRecordingScreen = React.createClass({
     getInitialState: function() {
         return ({
-            capturedBase64: '',
             recordingMsg: 'RECORDING_STOPPED',
-            type: Camera.constants.Type.back, 
-            directory: "MindSwarms"
+            type: Camera.constants.Type.back
         });
     },
     switchCamera: function() {
         this.setState({ type: this.state.type === Camera.constants.Type.back ? Camera.constants.Type.front : Camera.constants.Type.back });
     },
-    render: function() {
+    onCaptureButtonPress: function() {
         var component = this;
+        this.refs.cam.captureVideo({ sampleSize: 10 }).then(function(recordingMsg) {
+            component.setState({ recordingMsg });
+        });
+    },
+    render: function() {
         return (
-            <View style={styles.container}>
-                <Camera style={styles.camera} ref="cam" type={this.state.type} directory={ this.state.directory } captureTarget={Camera.constants.CaptureTarget.memory}></Camera>
-                <Image
-                    source={{
-                        isStatic: true,
-                        uri: 'data:image/jpeg;base64,' + component.state.capturedBase64,
-                    }}
-                    style={styles.captured}/>
+            <View style={ styles.container }>
+                <Camera ref="cam" 
+                    style={ styles.camera } 
+                    type={ this.state.type } 
+                    directory={ "MindSwarms" } 
+                    captureTarget={ Camera.constants.CaptureTarget.memory } />
+                <Text style={ styles.videoPrompt }>{ this.props.prompt }</Text>
 
-                <TouchableHighlight style={styles.captureButton} onPress={function() {
-                    component.refs.cam.captureVideo({ sampleSize: 10 }).then(function(recordingMsg) {
-                        component.setState({ recordingMsg });
-                    });
-                }}>
-                    <Text style={{textAlign: 'center'}}>{ RecordButtonTexts[component.state.recordingMsg] }</Text>
+                <TouchableHighlight style={ styles.captureButton } onPress={ this.onCaptureButtonPress }>
+                    <Text style={ styles.center }>{ RecordButtonTexts[this.state.recordingMsg] }</Text>
                 </TouchableHighlight>
             </View>
         );

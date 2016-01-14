@@ -257,9 +257,8 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
     private static File getOutputMediaFile(int type, String directory){
         if (isExternalStorageWritable()) {
             Log.d(TAG, "SDCard is mounted.");
-
-            File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES), directory);
+            
+            File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), directory);
 
             // Create the storage directory if it does not exist
             if (! mediaStorageDir.exists()){

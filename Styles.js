@@ -10,6 +10,9 @@ var styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#F5FCFF'
     },
+    center: {
+        textAlign: 'center'
+    },
     toolbar: {
         backgroundColor: '#a9a9a9',
         height: 56,
@@ -26,10 +29,6 @@ var styles = StyleSheet.create({
         position: 'absolute',
         top: 0, right: 0, bottom: 0, left: 0
     },
-    captured: {
-        width: 200,
-        height: 400
-    },
     captureButton: {
         position: 'absolute',
         height: 50,
@@ -37,12 +36,11 @@ var styles = StyleSheet.create({
         backgroundColor: 'red',
         borderRadius: 20,
     },
-    switchButton: {
+    videoPrompt: {
         position: 'absolute',
-        height: 50,
-        left: 50, top: 20, right: 50,
-        backgroundColor: '#FFFFFF',
-        borderRadius: 20,
+        left: 50, top: 20, right: 50, 
+        color: 'white', 
+        fontSize: 30
     }
 });
 

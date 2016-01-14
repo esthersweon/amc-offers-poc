@@ -70,7 +70,8 @@ var MindSwarmsApp = React.createClass({
         //     configureScene={() => Navigator.SceneConfigs.FadeAndroid}
         //     renderScene={ routeMapper } />
         // );
-        return <VideoRecordingScreen />
+        var prompt = "How many pets do you have?"
+        return <VideoRecordingScreen prompt={prompt}/>
     }
 });
 
