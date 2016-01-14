@@ -34,11 +34,16 @@ import java.util.HashMap;
 
 public class ReactCameraModule extends ReactContextBaseJavaModule {
     ReactApplicationContext reactContext;
+    private CameraInstanceManager cameraInstanceManager;
     
     public static final int MEDIA_TYPE_IMAGE = 1;
     public static final int MEDIA_TYPE_VIDEO = 2;
+
     private static final String TAG = "ReactCameraModule";
     private static final int QUALITY_SETTING = CamcorderProfile.QUALITY_LOW;
+    private boolean isRecording;
+    private Camera mCamera;
+    private MediaRecorder mMediaRecorder;
 
     public ReactCameraModule(ReactApplicationContext reactContext, CameraInstanceManager cameraInstanceManager) {
         super(reactContext);
@@ -48,61 +53,122 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
 
     @Override
     public String getName() {
-        return "ReactCameraModule";
+        return TAG;
     }
 
     @Override
     public Map<String, Object> getConstants() {
         final Map<String, Object> constants = new HashMap<>();
-            final Map<String, Object> constantsAspect = new HashMap<>();
-            constantsAspect.put("stretch", "stretch");
-            constantsAspect.put("fit", "fit");
+        final Map<String, Object> constantsAspect = new HashMap<>();
+        constantsAspect.put("stretch", "stretch");
+        constantsAspect.put("fit", "fit");
         constants.put("Aspect", constantsAspect);
         return constants;
     }
 
     @ReactMethod
-    public void capture(ReadableMap options, final Callback callback) {
+    public void capturePicture(ReadableMap options, final Callback callback) {
         Camera camera = cameraInstanceManager.getCamera(options.getString("type"));
         camera.takePicture(null, null, new PictureTakenCallback(options, callback, reactContext));
     }
 
-    // NOTE - START CODE THAT BRIAN ADDED
+    private class PictureTakenCallback implements Camera.PictureCallback {
+        ReadableMap options;
+        Callback callback;
+        ReactApplicationContext reactContext;
+
+        PictureTakenCallback(ReadableMap options, Callback callback, ReactApplicationContext reactContext) {
+            this.options = options;
+            this.callback = callback;
+            this.reactContext = reactContext;
+        }
+
+        private Bitmap RotateBitmap(Bitmap original, int deg)
+        {
+            Matrix matrix = new Matrix();
+            matrix.postRotate((float)deg);
+            return Bitmap.createBitmap(original, 0, 0, original.getWidth(), original.getHeight(), matrix, true);
+        }
+
+        @Override
+        public void onPictureTaken(byte[] data, Camera camera) {
+            camera.startPreview();
+
+            int cameraOrientation = cameraInstanceManager.getCameraOrientation(camera);
+
+            BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+            bitmapOptions.inSampleSize = options.getInt("sampleSize");
+            Bitmap bitmap = RotateBitmap(BitmapFactory.decodeByteArray(data, 0, data.length, bitmapOptions), -90);
+
+            switch(options.getString("target")) {
+                case "base64":
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                    byte[] byteArray = stream.toByteArray();
+                    String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                    callback.invoke(encoded);
+                break;
+                case "gallery":
+                    Media.insertImage(reactContext.getContentResolver(), bitmap, options.getString("title"), options.getString("description"));
+                    callback.invoke();
+                break;
+                case "file":
+                    callback.invoke();
+                break;
+            }
+        }
+    }
+
     @ReactMethod
     public void captureVideo(ReadableMap options, final Callback callback) {
         mCamera = cameraInstanceManager.getCamera(options.getString("type"));
 
         Log.d(TAG, "isRecording : " + isRecording);
         if (isRecording) {
-            new Thread("START RECORDER") {
-                public void run () {
-                    try {
-                        Log.d(TAG, "MediaRecorder STOP");
-
-                        mMediaRecorder.stop();  // stop the recording
-                        Log.d(TAG, "MediaRecorder RELEASE");
-                        releaseMediaRecorder(); // release the MediaRecorder object
-                    } catch (RuntimeException stopException) {
-                        Log.d(TAG, "MediaRecorder error :" + stopException);
-                        // cleanup here
-                        
-                    }
-                }
-            }.start();
-
-            // releaseCamera();
-
-            isRecording = false;
-            // inform the user that recording has stopped
-            callback.invoke("RECORDING_STOPPED");
+            MediaStopTask(callback).execute(null, null, null);
         } else {
             new MediaPrepareTask(callback).execute(null, null, null);
         }
     }
 
     /**
-     * Asynchronous task for preparing the {@link android.media.MediaRecorder} since it's a long blocking
-     * operation.
+     * Asynchronous task for stopping the {@link android.media.MediaRecorder}
+     */
+    class MediaStopTask extends AsyncTask<Void, Void, Boolean> {
+        Callback callback;
+
+        public MediaStopTask(Callback callback) {
+            this.callback = callback;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            try {
+                Log.d(TAG, "MediaRecorder STOP");
+                mMediaRecorder.stop(); 
+
+                Log.d(TAG, "MediaRecorder RELEASE");
+                releaseMediaRecorder(); 
+                return true;
+            } catch (RuntimeException stopException) {
+                Log.d(TAG, "MediaRecorder error :" + stopException);
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            if (!result) {
+                // TODO what to do here?
+                // MainActivity.this.finish();
+            }
+            isRecording = false;
+            callback.invoke("RECORDING_STOPPED");
+        }
+    }
+
+    /**
+     * Asynchronous task for preparing the {@link android.media.MediaRecorder}
      */
     class MediaPrepareTask extends AsyncTask<Void, Void, Boolean> {
         Callback callback;
@@ -141,25 +207,22 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
         }
     }
 
-    /** Create a file Uri for saving an image or video */
-    private static Uri getOutputMediaFileUri(int type){
-        return Uri.fromFile(getOutputMediaFile(type));
-    }
-
     /** Create a File for saving an image or video */
     private static File getOutputMediaFile(int type){
-        // To be safe, you should check that the SDCard is mounted
-        // using Environment.getExternalStorageState() before doing this.
+        // Check that the SDCard is mounted
+        if (Environment.getExternalStorageState().equals("mounted")) {
+            Log.d(TAG, "SDCard is mounted.");
+        } else {
+            Log.d(TAG, "SDCard is not mounted.");
+        }
 
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-                  Environment.DIRECTORY_PICTURES), "MyCameraApp");
-        // This location works best if you want the created images to be shared
-        // between applications and persist after your app has been uninstalled.
+                  Environment.DIRECTORY_PICTURES), TAG);
 
         // Create the storage directory if it does not exist
         if (! mediaStorageDir.exists()){
             if (! mediaStorageDir.mkdirs()){
-                // Log.d("MyCameraApp", "failed to create directory");
+                Log.d(TAG, "failed to create directory");
                 return null;
             }
         }
@@ -179,11 +242,6 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
 
         return mediaFile;
     }
-
-    private CameraInstanceManager cameraInstanceManager;
-    private boolean isRecording;
-    private Camera mCamera;
-    private MediaRecorder mMediaRecorder;
 
     private void releaseMediaRecorder(){
         if (mMediaRecorder != null) {
@@ -239,54 +297,5 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
             return false;
         }
         return true;
-    }
-
-    // NOTE - END CODE THAT BRIAN ADDED
-
-    private class PictureTakenCallback implements Camera.PictureCallback {
-        ReadableMap options;
-        Callback callback;
-        ReactApplicationContext reactContext;
-
-        PictureTakenCallback(ReadableMap options, Callback callback, ReactApplicationContext reactContext) {
-            this.options = options;
-            this.callback = callback;
-            this.reactContext = reactContext;
-        }
-
-        private Bitmap RotateBitmap(Bitmap original, int deg)
-        {
-            Matrix matrix = new Matrix();
-            matrix.postRotate((float)deg);
-            return Bitmap.createBitmap(original, 0, 0, original.getWidth(), original.getHeight(), matrix, true);
-        }
-
-        @Override
-        public void onPictureTaken(byte[] data, Camera camera) {
-            camera.startPreview();
-
-            int cameraOrientation = cameraInstanceManager.getCameraOrientation(camera);
-
-            BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
-            bitmapOptions.inSampleSize = options.getInt("sampleSize");
-            Bitmap bitmap = RotateBitmap(BitmapFactory.decodeByteArray(data, 0, data.length, bitmapOptions), -90);
-
-            switch(options.getString("target")) {
-                case "base64":
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-                    byte[] byteArray = stream.toByteArray();
-                    String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                    callback.invoke(encoded);
-                break;
-                case "gallery":
-                    Media.insertImage(reactContext.getContentResolver(), bitmap, options.getString("title"), options.getString("description"));
-                    callback.invoke();
-                break;
-                case "file":
-                    callback.invoke();
-                break;
-            }
-        }
     }
 }
