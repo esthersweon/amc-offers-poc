@@ -144,7 +144,9 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
         @Override
         protected Boolean doInBackground(Void... voids) {
             try {
-                mMediaRecorder.stop(); 
+                Log.d(TAG, "MediaRecorder STOP");
+                mMediaRecorder.stop();
+                Log.d(TAG, "MediaRecorder RELEASE");
                 releaseMediaRecorder();
                 return true;
             } catch (RuntimeException stopException) {
@@ -156,8 +158,6 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
 
         @Override
         protected void onPostExecute(Boolean success) {
-            releaseCamera();
-
             if (success) {
                 isRecording = false;
                 callback.invoke("RECORDING_STOPPED");
@@ -182,7 +182,6 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
                 mMediaRecorder.start();
             } else {
                 releaseMediaRecorder();
-                releaseCamera();
                 callback.invoke("RECORDING_ERROR");
                 return false;
             }
@@ -197,6 +196,47 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
                 // MainActivity.this.finish(); ???
             }
         }
+    }
+
+    private boolean prepareVideoRecorder(){
+        mCamera.setDisplayOrientation(90);
+
+        mMediaRecorder = new MediaRecorder();
+
+        // Step 1: Unlock and set camera to MediaRecorder
+        mCamera.lock();
+        mCamera.unlock();
+        mMediaRecorder.setCamera(mCamera);
+
+        // Step 2: Set sources
+        mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
+        mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+
+        // Step 3: Set a CamcorderProfile (requires API Level 8 or higher)
+        mMediaRecorder.setProfile(CamcorderProfile.get(QUALITY_SETTING));
+
+        mMediaRecorder.setOrientationHint(90);
+
+        // Step 4: Set output file
+        mMediaRecorder.setOutputFile(getOutputMediaFile(MEDIA_TYPE_VIDEO).toString());
+
+        // Step 5: Set the preview output
+        // TODO - nullcheck here
+        mMediaRecorder.setPreviewDisplay(cameraInstanceManager.getView().surfaceHolder.getSurface());
+
+        // Step 6: Prepare configured MediaRecorder
+        try {
+            mMediaRecorder.prepare();
+        } catch (IllegalStateException e) {
+            Log.d(TAG, "IllegalStateException preparing MediaRecorder: " + e.getMessage());
+            releaseMediaRecorder();
+            return false;
+        } catch (IOException e) {
+            Log.d(TAG, "IOException preparing MediaRecorder: " + e.getMessage());
+            releaseMediaRecorder();
+            return false;
+        }
+        return true;
     }
 
     /** Create a File for saving an image or video */
@@ -242,52 +282,5 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
             mMediaRecorder = null;
             mCamera.lock();           // lock camera for later use
         }
-    }
-
-    private void releaseCamera(){
-        if (mCamera != null){
-            mCamera.release();        // release the camera for other applications
-            mCamera = null;
-        }
-    }
-
-    private boolean prepareVideoRecorder(){
-        mCamera.setDisplayOrientation(90);
-
-        mMediaRecorder = new MediaRecorder();
-
-        // Step 1: Unlock and set camera to MediaRecorder
-        mCamera.unlock();
-        mMediaRecorder.setCamera(mCamera);
-
-        // Step 2: Set sources
-        mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
-        mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
-
-        // Step 3: Set a CamcorderProfile (requires API Level 8 or higher)
-        mMediaRecorder.setProfile(CamcorderProfile.get(QUALITY_SETTING));
-
-        mMediaRecorder.setOrientationHint(90);
-
-        // Step 4: Set output file
-        mMediaRecorder.setOutputFile(getOutputMediaFile(MEDIA_TYPE_VIDEO).toString());
-
-        // Step 5: Set the preview output
-        // TODO - nullcheck here
-        mMediaRecorder.setPreviewDisplay(cameraInstanceManager.getView().surfaceHolder.getSurface());
-
-        // Step 6: Prepare configured MediaRecorder
-        try {
-            mMediaRecorder.prepare();
-        } catch (IllegalStateException e) {
-            Log.d(TAG, "IllegalStateException preparing MediaRecorder: " + e.getMessage());
-            releaseMediaRecorder();
-            return false;
-        } catch (IOException e) {
-            Log.d(TAG, "IOException preparing MediaRecorder: " + e.getMessage());
-            releaseMediaRecorder();
-            return false;
-        }
-        return true;
     }
 }
