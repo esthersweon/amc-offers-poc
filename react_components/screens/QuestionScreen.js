@@ -13,8 +13,8 @@ let {
     TouchableHighlight
 } = React;
 
-let styles = require('../Styles'),
-    Router = require('../router.js');
+import Router from '../Router';
+let styles = require('../Styles');
 
 let QuestionScreen = React.createClass({
     getInitialState() {
@@ -91,4 +91,4 @@ let QuestionScreen = React.createClass({
     }
 });
 
-module.exports = QuestionScreen;
+export default QuestionScreen;

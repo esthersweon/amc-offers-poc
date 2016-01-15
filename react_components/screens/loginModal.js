@@ -1,8 +1,9 @@
 'use strict';
 
 let React = require('react-native'),
-    auth = require('../api/auth'),
-    Router = require('../router');
+    auth = require('../api/auth');
+
+import Router from '../Router';
 
 let {
     AppRegistry,

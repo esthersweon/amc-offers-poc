@@ -13,6 +13,8 @@ let {
     TouchableHighlight
 } = React;
 
+import Router from '../Router';
+
 let styles = require('../Styles');
 let RecordButtonTexts = {
     RECORDING_STOPPED: 'Record',
@@ -56,4 +58,4 @@ let VideoRecordingScreen = React.createClass({
     }
 });
 
-module.exports = VideoRecordingScreen;
+export default VideoRecordingScreen;

@@ -16,9 +16,8 @@ let {
 } = React;
 
 import ExNavigator from '@exponent/react-native-navigator';
-
-let styles = require('./react_components/Styles'),
-    Router = require('./react_components/router');
+import Router from './react_components/Router';
+let styles = require('./react_components/Styles');
 
 class Component extends  React.Component {
     constructor(props){

@@ -15,9 +15,9 @@ let {
     Dimensions
 } = React;
 
-let styles = require('../Styles'),
-    Router = require('../router'),
-    LoginModal = require('./loginModal');
+import Router from '../Router';
+let styles = require('../Styles');
+let LoginModal = require('./loginModal');
 
 let {
     height: deviceHeight
@@ -33,6 +33,7 @@ let WelcomeSplashScreen = React.createClass({
     },
 
     componentDidMount() {
+        console.log('router', Router);
         // Set navigator to router
         Router.setNavigator(this.props.navigator);
 
@@ -56,7 +57,6 @@ let WelcomeSplashScreen = React.createClass({
     }, 
 
     render() {
-        var component = this;
         return (
             <View style={styles.container}>
                 <Text>MINDSWARMS</Text>
@@ -89,4 +89,4 @@ let WelcomeSplashScreen = React.createClass({
     }
 });
 
-module.exports = WelcomeSplashScreen;
+export default WelcomeSplashScreen;
