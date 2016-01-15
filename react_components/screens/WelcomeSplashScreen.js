@@ -10,12 +10,47 @@ var {
   Image,
   Text,
   View,
-  TouchableHighlight
+  TouchableHighlight,
+  Animated,
+  Dimensions
 } = React;
 
-var styles = require('../../Styles');
+var styles = require('../../Styles'),
+    Router = require('../router'),
+    TopModal = require('./topModal');
+
+var {
+  height: deviceHeight
+} = Dimensions.get('window');
+
 
 var WelcomeSplashScreen = React.createClass({
+    getInitialState: function() {
+      return {
+        offset: new Animated.Value(-deviceHeight),
+        modal: false
+      };
+    },
+    componentDidMount: function() {
+      Animated.timing(this.state.offset, {
+        duration: 150,
+        toValue: 0
+      }).start();
+    },
+
+    closeModal: function() {
+      Animated.timing(this.state.offset, {
+        duration: 150,
+        toValue: -deviceHeight
+        //toValue: deviceHeight
+      }).start(this.props.closeModal);
+    },
+
+    openModal: function() {
+      console.log("Hello from Open Modal");
+      this.setState({modal: true})
+    }, 
+
     render: function() {
         var component = this;
         return (
@@ -23,7 +58,7 @@ var WelcomeSplashScreen = React.createClass({
                 <Text>MINDSWARMS</Text>
                 <View style={ styles.postIt }>
                     <Text>Have an account?</Text>
-                    <TouchableHighlight onPress={function() {}}>
+                    <TouchableHighlight onPress={this.openModal}>
                         <Text style={{textAlign: 'center'}}>Sign In</Text>
                     </TouchableHighlight>
 
@@ -33,6 +68,15 @@ var WelcomeSplashScreen = React.createClass({
                         <Text style={{textAlign: 'center'}}>Sign Out</Text>
                     </TouchableHighlight>
                 </View>
+
+                {
+                  this.state.modal 
+                    ? <TopModal closeModal={() => this.setState({modal: false})}
+                                signedIn={() =>
+                                  this.props.navigator.push(Router.getRoute('Question'))
+                                }/>
+                    : null
+                }
             </View>
         );
     }

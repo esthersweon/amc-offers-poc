@@ -15,12 +15,15 @@ var {
   Text
 } = React;
 
+import ExNavigator from '@exponent/react-native-navigator';
+
 var styles = require('./Styles'),
     WelcomeSplashScreen = require('./react_components/screens/WelcomeSplashScreen'),
     StudiesScreen = require('./react_components/screens/StudiesScreen'),
     QuestionScreen = require('./react_components/screens/QuestionScreen'),
     VideoRecordingScreen = require('./react_components/screens/VideoRecordingScreen'), 
-    StudyCompletedScreen = require('./react_components/screens/StudyCompletedScreen');
+    StudyCompletedScreen = require('./react_components/screens/StudyCompletedScreen'),
+    Router = require('./react_components/router.js');
 
 // var _navigator;
 // BackAndroid.addEventListener('hardwareBackPress', () => {
@@ -60,18 +63,50 @@ var styles = require('./Styles'),
 //   }
 // };
 
-var MindSwarmsApp = React.createClass({
-    render: function() {
-        // var initialRoute = {name: 'home'};
-        // return (
-        //   <Navigator
-        //     style={styles.container}
-        //     initialRoute={initialRoute}
-        //     configureScene={() => Navigator.SceneConfigs.FadeAndroid}
-        //     renderScene={ routeMapper } />
-        // );
-        return <VideoRecordingScreen />
+class Component extends  React.Component {
+  constructor(props){
+    super(props)
+
+    this.state = {
+      modal: false,
     }
+  }
+
+  openModal() {
+    console.log("Hello from Open Modal");
+    this.setState({modal: true})
+  }
+
+  render() {
+      return (
+        <View style={styles.container}>
+
+          <ExNavigator
+            initialRoute={Router.getRoute('Home')}
+            style={{ flex: 1 }}
+            sceneStyle={{ paddingTop: 64 }} />
+
+          {this.state.modal ? <TopModal closeModal={() => this.setState({modal: false}) }/> : null }
+        </View>
+      )
+      // var initialRoute = {name: 'home'};
+      // return (
+      //   <Navigator
+      //     style={styles.container}
+      //     initialRoute={initialRoute}
+      //     configureScene={() => Navigator.SceneConfigs.FadeAndroid}
+      //     renderScene={ routeMapper } />
+      // );
+      // return <VideoRecordingScreen />
+  }
+}
+
+var styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  }
 });
 
-AppRegistry.registerComponent('AwesomeProject', () => MindSwarmsApp);
+AppRegistry.registerComponent('AwesomeProject', () => Component);
+
+module.exports = Component;

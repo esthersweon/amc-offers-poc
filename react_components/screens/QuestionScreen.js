@@ -13,7 +13,8 @@ var {
   TouchableHighlight
 } = React;
 
-var styles = require('../../Styles');
+var styles = require('../../Styles'),
+    Router = require('../router.js');
 
 var QuestionScreen = React.createClass({
   getInitialState: function() {
@@ -61,26 +62,30 @@ var QuestionScreen = React.createClass({
   renderAnswerChoice: function(choice) {
     return(
       <View>
-        <Text>{ choice }</Text>
+        <Text>{ choice.text }</Text>
       </View>
     );
   },
-	render: function() {
+  render: function() {
     if (!this.state.loaded) {
       return this.renderLoadingView();
-    }
+    }  
+    return (
+        <View>
+          <Text>{ this.state.question }</Text>
+          <ListView 
+            dataSource={ this.state.answerChoices }
+            renderRow={this.renderAnswerChoice} 
+            style={styles.listView} />
 
-		return (
-			<View>
-				<Text>{ this.state.question }</Text>
-        <ListView 
-          dataSource={ this.state.answerChoices }
-          renderRow={this.renderAnswerChoice} 
-          style={styles.listView} />
-        <Text>{ this.state.videoAnswer ? "Record Video Response" : ""}</Text>
-			</View>
-		);
-	}
+          <TouchableHighlight onPress={() => {
+              this.props.navigator.push(Router.getRoute('RecordVideo'));
+          }}>
+              <Text style={{textAlign: 'center'}}>{ this.state.videoAnswer ? 'Record Video Response' : ''}</Text>
+          </TouchableHighlight>  
+  		</View>
+  	);
+  }
 });
 
 

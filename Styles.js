@@ -43,6 +43,11 @@ var styles = StyleSheet.create({
         left: 50, top: 20, right: 50,
         backgroundColor: '#FFFFFF',
         borderRadius: 20,
+    },
+    flexCenter: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });
 

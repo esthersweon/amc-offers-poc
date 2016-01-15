@@ -6,8 +6,9 @@
     "start": "react-native start"
   },
   "dependencies": {
+    "@exponent/react-native-navigator": "^0.3.7",
     "jquery": "^2.1.4",
-    "react-native": "^0.14.0",
+    "react-native": "^0.17.0",
     "react-native-device-uuid": "lazywei/react-native-device-uuid"
   }
 }

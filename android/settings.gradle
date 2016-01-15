@@ -1,6 +1,5 @@
 rootProject.name = 'AwesomeProject'
 
 include ':app'
-
 include ':com.lwansbrough.ReactCamera'
 project(':com.lwansbrough.ReactCamera').projectDir = new File(settingsDir, './react-native-camera/android')
