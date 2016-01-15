@@ -2,7 +2,7 @@
 
 let React = require('react-native'),
     auth = require('../api/auth'),
-    Router = require('../router');
+    Router = require('../Router');
 
 let {
     AppRegistry,

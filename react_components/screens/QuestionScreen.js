@@ -14,7 +14,7 @@ let {
 } = React;
 
 let styles = require('../Styles'),
-    Router = require('../router.js');
+    Router = require('../Router');
 
 let QuestionScreen = React.createClass({
     getInitialState() {

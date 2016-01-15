@@ -127,14 +127,11 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
         if (isRecording) {
             new MediaStopTask(callback).execute(null, null, null);
         } else {
-            String directory = options.getString("directory");
-            new MediaPrepareTask(directory, callback).execute(null, null, null);
+            new MediaPrepareTask(options, callback).execute(null, null, null);
         }
     }
 
-    /**
-     * Asynchronous task for stopping the {@link android.media.MediaRecorder}
-     */
+    // Asynchronous task for stopping the {@link android.media.MediaRecorder}
     class MediaStopTask extends AsyncTask<Void, Void, Boolean> {
         Callback callback;
 
@@ -167,21 +164,19 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
         }
     }
 
-    /**
-     * Asynchronous task for preparing the {@link android.media.MediaRecorder}
-     */
+    // Asynchronous task for preparing the {@link android.media.MediaRecorder}
     class MediaPrepareTask extends AsyncTask<Void, Void, Boolean> {
+        ReadableMap options;
         Callback callback;
-        String directory;
 
-        public MediaPrepareTask(String directory, Callback callback) {
-            this.directory = directory;
+        public MediaPrepareTask(ReadableMap options, Callback callback) {
+            this.options = options;
             this.callback = callback;
         }
 
         @Override
         protected Boolean doInBackground(Void... voids) {
-            if (prepareVideoRecorder(directory)) {
+            if (prepareVideoRecorder(options)) {
                 Log.d(TAG, "MediaRecorder START");
                 mMediaRecorder.start();
             } else {
@@ -203,8 +198,8 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
         }
     }
 
-    private boolean prepareVideoRecorder(String directory){
-        mCamera.setDisplayOrientation(90);
+    private boolean prepareVideoRecorder(ReadableMap options){
+        cameraInstanceManager.updateCameraOrientation(mCamera);
 
         mMediaRecorder = new MediaRecorder();
 
@@ -220,9 +215,23 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
         // Step 3: Set a CamcorderProfile (requires API Level 8 or higher)
         mMediaRecorder.setProfile(CamcorderProfile.get(QUALITY_SETTING));
 
-        mMediaRecorder.setOrientationHint(90);
-
+        int deviceRotation = cameraInstanceManager.getCameraOrientation(mCamera);
+        boolean isFront = options.getString("type").equals("front");
+        if (isFront) {
+            if (deviceRotation % 180 == 0) {
+                mMediaRecorder.setOrientationHint(deviceRotation);
+            } else {
+                mMediaRecorder.setOrientationHint(90);
+            }
+        } else {
+            if (deviceRotation % 180 == 0){
+                mMediaRecorder.setOrientationHint(deviceRotation);
+            } else {
+                mMediaRecorder.setOrientationHint(90);
+            } 
+        }
         // Step 4: Set output file
+        String directory = options.getString("directory");
         mMediaRecorder.setOutputFile(getOutputMediaFile(MEDIA_TYPE_VIDEO, directory).toString());
 
         // Step 5: Set the preview output

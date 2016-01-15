@@ -18,7 +18,7 @@ let {
 import ExNavigator from '@exponent/react-native-navigator';
 
 let styles = require('./react_components/Styles'),
-    Router = require('./react_components/router');
+    Router = require('./react_components/Router');
 
 class Component extends  React.Component {
     constructor(props){
@@ -38,7 +38,7 @@ class Component extends  React.Component {
                     initialRoute={Router.getRoute('Home')}
                     style={{ flex: 1 }}
                     sceneStyle={{ paddingTop: 64 }} />
-
+            
             </View>
         )
     }

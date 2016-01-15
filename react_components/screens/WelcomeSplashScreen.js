@@ -16,7 +16,7 @@ let {
 } = React;
 
 let styles = require('../Styles'),
-    Router = require('../router'),
+    Router = require('../Router'),
     LoginModal = require('./loginModal');
 
 let {
