@@ -8,7 +8,7 @@ var {
   View
 } = React;
 
-var styles = require('../Styles');
+var styles = require('./Styles');
 
 var StudiesList = React.createClass({
   getInitialState: function() {

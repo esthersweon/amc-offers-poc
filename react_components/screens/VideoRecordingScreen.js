@@ -1,41 +1,40 @@
 'use strict';
 
-var React = require('react-native');
-var Camera = require('react-native-camera');
-var {
-  ActivityIndicatorIOS,
-  ListView,
-  Platform,
-  ProgressBarAndroid,
-  Image,
-  Text,
-  View,
-  TouchableHighlight
+let React = require('react-native');
+let Camera = require('react-native-camera');
+let {
+    ActivityIndicatorIOS,
+    ListView,
+    Platform,
+    ProgressBarAndroid,
+    Image,
+    Text,
+    View,
+    TouchableHighlight
 } = React;
 
-var styles = require('../../Styles');
-var RecordButtonTexts = {
+let styles = require('../Styles');
+let RecordButtonTexts = {
     RECORDING_STOPPED: 'Record',
     RECORDING_STARTED: 'Stop'
  };
 
-var VideoRecordingScreen = React.createClass({
-    getInitialState: function() {
-        return ({
+let VideoRecordingScreen = React.createClass({
+    getInitialState() {
+        return {
             recordingMsg: 'RECORDING_STOPPED',
             type: Camera.constants.Type.front
-        });
+        };
     },
-    switchCamera: function() {
+    switchCamera() {
         this.setState({ type: this.state.type === Camera.constants.Type.back ? Camera.constants.Type.front : Camera.constants.Type.back });
     },
-    onCaptureButtonPress: function() {
-        var component = this;
-        this.refs.cam.captureVideo({ sampleSize: 10 }).then(function(recordingMsg) {
-            component.setState({ recordingMsg });
+    onCaptureButtonPress() {
+        this.refs.cam.captureVideo({ sampleSize: 10 }).then((recordingMsg)=> {
+            this.setState({ recordingMsg });
         });
     },
-    render: function() {
+    render() {
         return (
             <View style={ styles.container }>
                 <Camera ref="cam" 

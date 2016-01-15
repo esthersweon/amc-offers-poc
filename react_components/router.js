@@ -1,14 +1,15 @@
 'use strict';
 
-var React = require('react-native');
-var {
+let React = require('react-native');
+let styles = require('./Styles');
+let {
   View,
   Text,
   Image,
   TouchableHighlight
 } = React;
 
-var navigator;
+let navigator;
 
 let Router = {
   // set navigator based on screen (sugar)
@@ -95,27 +96,4 @@ let Router = {
   }
 };
 
-var styles = {
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  title: {
-    flex: 1
-  },
-  titleName: {
-    marginLeft: 5,
-    fontWeight: 'bold'
-  },
-  titlePhoto: {
-    height: 30,
-    width: 30,
-    borderRadius: 15,
-
-  }
-
-};
-
-module.exports = Router
+module.exports = Router;

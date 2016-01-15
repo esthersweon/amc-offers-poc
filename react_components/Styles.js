@@ -10,6 +10,9 @@ var styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#F5FCFF'
     },
+    title: {
+        flex: 1
+    },    
     center: {
         textAlign: 'center'
     },

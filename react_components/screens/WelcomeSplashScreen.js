@@ -15,7 +15,7 @@ let {
     Dimensions
 } = React;
 
-let styles = require('../../Styles'),
+let styles = require('../Styles'),
     Router = require('../router'),
     LoginModal = require('./loginModal');
 

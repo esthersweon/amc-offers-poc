@@ -13,7 +13,7 @@ var {
   TouchableHighlight
 } = React;
 
-var styles = require('../Styles');
+var styles = require('./Styles');
 
 var ProfileVideoRecordingLink = React.createClass({
 	render: function() {
