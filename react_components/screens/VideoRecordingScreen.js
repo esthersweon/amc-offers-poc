@@ -23,7 +23,7 @@ var VideoRecordingScreen = React.createClass({
     getInitialState: function() {
         return ({
             recordingMsg: 'RECORDING_STOPPED',
-            type: Camera.constants.Type.back
+            type: Camera.constants.Type.front
         });
     },
     switchCamera: function() {
@@ -47,6 +47,10 @@ var VideoRecordingScreen = React.createClass({
 
                 <TouchableHighlight style={ styles.captureButton } onPress={ this.onCaptureButtonPress }>
                     <Text style={ styles.center }>{ RecordButtonTexts[this.state.recordingMsg] }</Text>
+                </TouchableHighlight>
+
+                <TouchableHighlight style={ styles.switchButton } onPress={ this.switchCamera }>
+                    <Text style={ styles.center }>Switch</Text>
                 </TouchableHighlight>
             </View>
         );

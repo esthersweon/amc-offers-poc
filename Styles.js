@@ -34,7 +34,16 @@ var styles = StyleSheet.create({
         height: 50,
         left: 150, bottom: 20, right: 150,
         backgroundColor: 'red',
-        borderRadius: 20,
+        borderRadius: 20
+    },
+    switchButton: {
+        position: 'absolute',
+        height: 50,
+        width: 50,
+        bottom: 20, 
+        right: 20,
+        backgroundColor: 'white',
+        borderRadius: 50
     },
     videoPrompt: {
         position: 'absolute',
