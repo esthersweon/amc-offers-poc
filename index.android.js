@@ -66,10 +66,6 @@ var styles = require('./Styles'),
 class Component extends  React.Component {
   constructor(props){
     super(props)
-
-    this.state = {
-      modal: false,
-    }
   }
 
   openModal() {
@@ -86,7 +82,6 @@ class Component extends  React.Component {
             style={{ flex: 1 }}
             sceneStyle={{ paddingTop: 64 }} />
 
-          {this.state.modal ? <TopModal closeModal={() => this.setState({modal: false}) }/> : null }
         </View>
       )
       // var initialRoute = {name: 'home'};

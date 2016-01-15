@@ -1,80 +1,88 @@
 'use strict';
 
-var React = require('react-native');
-var Camera = require('react-native-camera');
-var {
-  ActivityIndicatorIOS,
-  ListView,
-  Platform,
-  ProgressBarAndroid,
-  Image,
-  Text,
-  View,
-  TouchableHighlight,
-  Animated,
-  Dimensions
+let React = require('react-native');
+let Camera = require('react-native-camera');
+let {
+    ActivityIndicatorIOS,
+    ListView,
+    Platform,
+    ProgressBarAndroid,
+    Image,
+    Text,
+    View,
+    TouchableHighlight,
+    Animated,
+    Dimensions
 } = React;
 
-var styles = require('../../Styles'),
+let styles = require('../../Styles'),
     Router = require('../router'),
-    TopModal = require('./topModal');
+    LoginModal = require('./loginModal');
 
-var {
-  height: deviceHeight
+let {
+    height: deviceHeight
 } = Dimensions.get('window');
 
 
-var WelcomeSplashScreen = React.createClass({
-    getInitialState: function() {
-      return {
-        offset: new Animated.Value(-deviceHeight),
-        modal: false
-      };
-    },
-    componentDidMount: function() {
-      Animated.timing(this.state.offset, {
-        duration: 150,
-        toValue: 0
-      }).start();
+let WelcomeSplashScreen = React.createClass({
+    getInitialState() {
+        return {
+            offset: new Animated.Value(-deviceHeight),
+            modal: false
+        };
     },
 
-    closeModal: function() {
-      Animated.timing(this.state.offset, {
-        duration: 150,
-        toValue: -deviceHeight
-        //toValue: deviceHeight
-      }).start(this.props.closeModal);
+    componentDidMount() {
+        // Set navigator to router
+        Router.setNavigator(this.props.navigator);
+
+        Animated.timing(this.state.offset, {
+            duration: 150,
+            toValue: 0
+        }).start();
     },
 
-    openModal: function() {
-      console.log("Hello from Open Modal");
-      this.setState({modal: true})
+    closeModal() {
+        Animated.timing(this.state.offset, {
+            duration: 150,
+            toValue: -deviceHeight
+            //toValue: deviceHeight
+        }).start(this.props.closeModal);
+    },
+
+    openModal() {
+        console.log("Hello from Open Modal");
+        this.setState({modal: true});
     }, 
 
-    render: function() {
+    render() {
         var component = this;
         return (
             <View style={styles.container}>
                 <Text>MINDSWARMS</Text>
                 <View style={ styles.postIt }>
-                    <Text>Have an account?</Text>
+                    <Text>Have an account?</Text> 
                     <TouchableHighlight onPress={this.openModal}>
                         <Text style={ styles.center }>Sign In</Text>
                     </TouchableHighlight>
 
                     <Text>Want to get paid for answer questions?</Text>
                     <TouchableHighlight onPress={function() {}}>
-                        <Text style={ styles.center }>Sign Out</Text>
+                        <Text style={ styles.center }>Sign Up</Text>
+                    </TouchableHighlight>
+
+                    <TouchableHighlight onPress={()=> Router.goTo('RecordVideo')}>
+                        <Text style={ styles.center }>Record Video</Text>
                     </TouchableHighlight>
                 </View>
 
                 {
-                  this.state.modal 
-                    ? <TopModal closeModal={() => this.setState({modal: false})}
-                                signedIn={() =>
-                                  this.props.navigator.push(Router.getRoute('Question'))
+                    this.state.modal 
+                        ? <LoginModal closeModal={() => this.setState({modal: false})}
+                                signIn={() =>
+                                  Router.goTo('Question')
                                 }/>
-                    : null
+                        : null
                 }
             </View>
         );

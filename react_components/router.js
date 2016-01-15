@@ -8,7 +8,18 @@ var {
   TouchableHighlight
 } = React;
 
+var navigator;
+
 let Router = {
+  // set navigator based on screen (sugar)
+  setNavigator(_navigator) {
+    navigator = _navigator;
+  },
+  // go to a route (sugar)
+  goTo(route) {
+    navigator.push(Router.getRoute(route));
+  },
+  // get object representing route
   getRoute(route) {
     if (typeof this.routes[route] !== 'function') {
       route = 'Home';
@@ -62,7 +73,7 @@ let Router = {
       };
     },
 
-    Question() {
+    Questions() {
       return {
         renderTitle() {
           return (
