@@ -17,7 +17,7 @@ let {
 
 let styles = require('../Styles'),
     Router = require('../Router'),
-    LoginModal = require('./loginModal');
+    LoginModal = require('./LoginModal');
 
 let {
     height: deviceHeight

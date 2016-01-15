@@ -47,7 +47,7 @@ let styles = StyleSheet.create({
     }
 });
 
-let loginModal = React.createClass({
+let LoginModal = React.createClass({
     getInitialState() {
         return {
             offset: new Animated.Value(-deviceHeight),
@@ -129,4 +129,4 @@ let loginModal = React.createClass({
     }
 });
 
-module.exports = loginModal;
+module.exports = LoginModal;
