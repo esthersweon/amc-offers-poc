@@ -108,5 +108,3 @@ var styles = StyleSheet.create({
 });
 
 AppRegistry.registerComponent('AwesomeProject', () => Component);
-
-module.exports = Component;

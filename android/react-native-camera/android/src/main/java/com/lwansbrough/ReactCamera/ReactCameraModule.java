@@ -127,7 +127,8 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
         if (isRecording) {
             new MediaStopTask(callback).execute(null, null, null);
         } else {
-            new MediaPrepareTask(callback).execute(null, null, null);
+            String directory = options.getString("directory");
+            new MediaPrepareTask(directory, callback).execute(null, null, null);
         }
     }
 
@@ -171,16 +172,20 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
      */
     class MediaPrepareTask extends AsyncTask<Void, Void, Boolean> {
         Callback callback;
+        String directory;
 
-        public MediaPrepareTask(Callback callback) {
+        public MediaPrepareTask(String directory, Callback callback) {
+            this.directory = directory;
             this.callback = callback;
         }
 
         @Override
         protected Boolean doInBackground(Void... voids) {
-            if (prepareVideoRecorder()) {
+            if (prepareVideoRecorder(directory)) {
+                Log.d(TAG, "MediaRecorder START");
                 mMediaRecorder.start();
             } else {
+                Log.d(TAG, "MediaRecorder NOT PREPARED");
                 releaseMediaRecorder();
                 callback.invoke("RECORDING_ERROR");
                 return false;
@@ -198,7 +203,7 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
         }
     }
 
-    private boolean prepareVideoRecorder(){
+    private boolean prepareVideoRecorder(String directory){
         mCamera.setDisplayOrientation(90);
 
         mMediaRecorder = new MediaRecorder();
@@ -218,7 +223,7 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
         mMediaRecorder.setOrientationHint(90);
 
         // Step 4: Set output file
-        mMediaRecorder.setOutputFile(getOutputMediaFile(MEDIA_TYPE_VIDEO).toString());
+        mMediaRecorder.setOutputFile(getOutputMediaFile(MEDIA_TYPE_VIDEO, directory).toString());
 
         // Step 5: Set the preview output
         // TODO - nullcheck here
@@ -239,48 +244,57 @@ public class ReactCameraModule extends ReactContextBaseJavaModule {
         return true;
     }
 
-    /** Create a File for saving an image or video */
-    private static File getOutputMediaFile(int type){
-        // Check that the SDCard is mounted
-        if (Environment.getExternalStorageState().equals("mounted")) {
-            Log.d(TAG, "SDCard is mounted.");
+    public static boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
         } else {
-            Log.d(TAG, "SDCard is not mounted.");
+            return false;
         }
+    }
 
-        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-                  Environment.DIRECTORY_PICTURES), TAG);
+    // Create a File for saving an image or video
+    private static File getOutputMediaFile(int type, String directory){
+        if (isExternalStorageWritable()) {
+            Log.d(TAG, "SDCard is mounted.");
+            
+            File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), directory);
 
-        // Create the storage directory if it does not exist
-        if (! mediaStorageDir.exists()){
-            if (! mediaStorageDir.mkdirs()){
-                Log.d(TAG, "failed to create directory");
+            // Create the storage directory if it does not exist
+            if (! mediaStorageDir.exists()){
+                if (! mediaStorageDir.mkdirs()){
+                    Log.d(TAG, "Failed to create picture directory.");
+                    return null;
+                } 
+            } else {
+                Log.d(TAG, "Picture directory already exists.");
+            }
+
+            // Create a media file name
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            File mediaFile;
+            if (type == MEDIA_TYPE_IMAGE){
+                Log.d(TAG, "Storing IMAGE FILE");
+                mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_"+ timeStamp + ".jpg");
+            } else if(type == MEDIA_TYPE_VIDEO) {
+                Log.d(TAG, "Storing VIDEO FILE");
+                mediaFile = new File(mediaStorageDir.getPath() + File.separator + "VID_"+ timeStamp + ".mp4");
+            } else {
                 return null;
             }
-        }
 
-        // Create a media file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        File mediaFile;
-        if (type == MEDIA_TYPE_IMAGE){
-            mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-            "IMG_"+ timeStamp + ".jpg");
-        } else if(type == MEDIA_TYPE_VIDEO) {
-            mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-            "VID_"+ timeStamp + ".mp4");
-        } else {
-            return null;
+            return mediaFile;
         }
-
-        return mediaFile;
+        Log.d(TAG, "SDCard is not mounted.");
+        return null;
     }
 
     private void releaseMediaRecorder(){
         if (mMediaRecorder != null) {
-            mMediaRecorder.reset();   // clear recorder configuration
-            mMediaRecorder.release(); // release the recorder object
+            mMediaRecorder.reset();
+            mMediaRecorder.release();
             mMediaRecorder = null;
-            mCamera.lock();           // lock camera for later use
+            mCamera.lock();
         }
     }
 }

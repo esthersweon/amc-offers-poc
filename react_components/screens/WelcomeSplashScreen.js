@@ -59,13 +59,12 @@ var WelcomeSplashScreen = React.createClass({
                 <View style={ styles.postIt }>
                     <Text>Have an account?</Text>
                     <TouchableHighlight onPress={this.openModal}>
-                        <Text style={{textAlign: 'center'}}>Sign In</Text>
+                        <Text style={ styles.center }>Sign In</Text>
                     </TouchableHighlight>
-
 
                     <Text>Want to get paid for answer questions?</Text>
                     <TouchableHighlight onPress={function() {}}>
-                        <Text style={{textAlign: 'center'}}>Sign Out</Text>
+                        <Text style={ styles.center }>Sign Out</Text>
                     </TouchableHighlight>
                 </View>
 
