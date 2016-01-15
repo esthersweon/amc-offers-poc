@@ -32,7 +32,7 @@ class Component extends  React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <View style={{ flex: 1 }}>
 
                 <ExNavigator
                     initialRoute={Router.getRoute('Home')}
