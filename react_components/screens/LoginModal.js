@@ -1,18 +1,15 @@
 'use strict';
 
 let React = require('react-native'),
-    auth = require('../api/auth');
+    auth = require('../api/auth'),
+    styles = require('../Styles');
 
 import Router from '../Router';
 
 let {
-    AppRegistry,
-    Component,
-    StyleSheet,
     Text,
     TextInput,
     View,
-    Navigator,
     TouchableOpacity,
     Animated,
     Dimensions
@@ -22,33 +19,7 @@ let {
     height: deviceHeight
 } = Dimensions.get('window');
 
-let styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    flexCenter: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    authError: {
-        color: 'red',
-        fontSize: 14
-    },
-    closeModal: {
-        justifyContent: 'flex-end'
-    },
-    modal: {
-        backgroundColor: 'rgba(255,255,255,.9)',
-        position: 'absolute',
-        top: 10,
-        right: 10,
-        bottom: 10,
-        left: 10
-    }
-});
-
-let loginModal = React.createClass({
+let LoginModal = React.createClass({
     getInitialState() {
         return {
             offset: new Animated.Value(-deviceHeight),
@@ -130,4 +101,4 @@ let loginModal = React.createClass({
     }
 });
 
-module.exports = loginModal;
+module.exports = LoginModal;

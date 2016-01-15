@@ -37,7 +37,7 @@ class Component extends  React.Component {
                     initialRoute={Router.getRoute('Home')}
                     style={{ flex: 1 }}
                     sceneStyle={{ paddingTop: 64 }} />
-
+            
             </View>
         )
     }

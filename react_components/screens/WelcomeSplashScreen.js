@@ -3,11 +3,6 @@
 let React = require('react-native');
 let Camera = require('react-native-camera');
 let {
-    ActivityIndicatorIOS,
-    ListView,
-    Platform,
-    ProgressBarAndroid,
-    Image,
     Text,
     View,
     TouchableHighlight,
@@ -17,7 +12,7 @@ let {
 
 import Router from '../Router';
 let styles = require('../Styles');
-let LoginModal = require('./loginModal');
+let LoginModal = require('./LoginModal');
 
 let {
     height: deviceHeight
