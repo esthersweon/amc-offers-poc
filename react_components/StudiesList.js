@@ -1,17 +1,16 @@
 'use strict';
 
-var React = require('react-native');
-var {
+let React = require('react-native');
+let {
   ListView,
-  Platform,
   Text,
   View
 } = React;
 
-var styles = require('./Styles');
+let styles = require('./Styles');
 
-var StudiesList = React.createClass({
-  getInitialState: function() {
+let StudiesList = React.createClass({
+  getInitialState() {
     return {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2
@@ -19,10 +18,10 @@ var StudiesList = React.createClass({
       loaded: false
     }
   },
-  componentDidMount: function() {
+  componentDidMount() {
     setTimeout(this.fetchData, 500);
   },
-  renderLoadingView: function() {
+  renderLoadingView() {
     return (
       <View style={styles.container}>
         <Text>
@@ -31,7 +30,7 @@ var StudiesList = React.createClass({
       </View>
     );
   },
-  fetchData: function() {
+  fetchData() {
     if (this.props.url === 'current') {
       // Following code should be replaced with API call for current studies
       this.setState({
@@ -68,7 +67,7 @@ var StudiesList = React.createClass({
       });
     }
   },
-  renderStudy: function(study) {
+  renderStudy(study) {
     return (
       <View style={styles.container}>
         <Text>{study.name}</Text>
@@ -76,11 +75,11 @@ var StudiesList = React.createClass({
       </View>
     );
   },
-  render: function() {
+  render() {
     if (!this.state.loaded) {
       return this.renderLoadingView();
     } else {
-      var listViewTitle = this.props.url === 'current' ? 'Current Studies' : 'Other';
+      let listViewTitle = this.props.url === 'current' ? 'Current Studies' : 'Other';
 
       return(
         <View>

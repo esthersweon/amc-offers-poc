@@ -2,16 +2,13 @@
 
 let React = require('react-native'),
     auth = require('../api/auth'),
+    styles = require('../Styles'),
     Router = require('../Router');
 
 let {
-    AppRegistry,
-    Component,
-    StyleSheet,
     Text,
     TextInput,
     View,
-    Navigator,
     TouchableOpacity,
     Animated,
     Dimensions
@@ -20,32 +17,6 @@ let {
 let {
     height: deviceHeight
 } = Dimensions.get('window');
-
-let styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    flexCenter: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    authError: {
-        color: 'red',
-        fontSize: 14
-    },
-    closeModal: {
-        justifyContent: 'flex-end'
-    },
-    modal: {
-        backgroundColor: 'rgba(255,255,255,.9)',
-        position: 'absolute',
-        top: 10,
-        right: 10,
-        bottom: 10,
-        left: 10
-    }
-});
 
 let LoginModal = React.createClass({
     getInitialState() {

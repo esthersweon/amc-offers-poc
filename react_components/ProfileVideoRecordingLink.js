@@ -1,26 +1,21 @@
 'use strict';
 
-var React = require('react-native');
-var Camera = require('react-native-camera');
-var {
-  ActivityIndicatorIOS,
-  ListView,
-  Platform,
-  ProgressBarAndroid,
-  Image,
+let React = require('react-native');
+let Camera = require('react-native-camera');
+let {
   Text,
-  View,
   TouchableHighlight
 } = React;
 
-var styles = require('./Styles');
+let styles = require('./Styles'), 
+    Router = require('./Router');
 
-var ProfileVideoRecordingLink = React.createClass({
-	render: function() {
+let ProfileVideoRecordingLink = React.createClass({
+	render() {
 		return (
-			<View style={ styles.container }>
-				<Text>Record your video!</Text>
-			</View>
+			<TouchableHighlight onPress={()=> Router.goTo('RecordVideo')}>
+                <Text style={ styles.center }>Record Video</Text>
+            </TouchableHighlight>
 		);
 	}
 });

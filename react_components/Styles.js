@@ -1,9 +1,9 @@
 'use strict';
 
-var React = require('react-native');
-var { StyleSheet } = React;
+let React = require('react-native');
+let { StyleSheet } = React;
 
-var styles = StyleSheet.create({
+let styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
@@ -58,6 +58,22 @@ var styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
+    }, 
+    // modal
+    modal: {
+        backgroundColor: 'rgba(255,255,255,.9)',
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        bottom: 10,
+        left: 10
+    },
+    authError: {
+        color: 'red',
+        fontSize: 14
+    },
+    closeModal: {
+        justifyContent: 'flex-end'
     }
 });
 

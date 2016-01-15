@@ -43,8 +43,8 @@ let StudyCompleteScreen = React.createClass({
     },
 
     render() {
-        let price = this.state.price.number + " " + this.state.price.currency;
-        let waitTime = this.state.waitTime.number + " " + this.state.waitTime.increment;
+        let price = this.state.price.number + " " + this.state.price.currency,
+            waitTime = this.state.waitTime.number + " " + this.state.waitTime.increment;
         return (
             <View style={ styles.container }>
                 <Text>That's all for this study! Thank you for your input.</Text>
