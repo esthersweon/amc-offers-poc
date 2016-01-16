@@ -1,7 +1,6 @@
 'use strict';
 
 let React = require('react-native'),
-    Camera = require('react-native-camera'),
     Router = require('../Router'),
     styles = require('../Styles'),
     LoginModal = require('./LoginModal');
@@ -61,7 +60,7 @@ let WelcomeSplashScreen = React.createClass({
                     </TouchableHighlight>
 
                     <Text>Want to get paid for answer questions?</Text>
-                    <TouchableHighlight onPress={function() {}}>
+                    <TouchableHighlight onPress={ Router.setRoute('SignUp') }>
                         <Text style={ styles.center }>Sign Up</Text>
                     </TouchableHighlight>
 

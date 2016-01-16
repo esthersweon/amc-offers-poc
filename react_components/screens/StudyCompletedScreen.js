@@ -1,7 +1,6 @@
 'use strict';
 
 let React = require('react-native');
-let Camera = require('react-native-camera');
 let {
     ActivityIndicatorIOS,
     ListView,

@@ -79,7 +79,7 @@ let LoginModal = React.createClass({
                     autocorrect='false'
                     keyboardType='email-address'
                     placeholder='email'
-                    style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+                    style={ styles.inputField }
                     onChangeText={(email) => this.setState({email})}
                     value={this.state.email} />
                 
@@ -88,7 +88,7 @@ let LoginModal = React.createClass({
                     secureTextEntry={true}
                     keyboardType='default'
                     placeholder='password'
-                    style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+                    style={ styles.inputField }
                     onChangeText={(password) => this.setState({password})}
                     value={this.state.password} />
 

@@ -68,6 +68,11 @@ let styles = StyleSheet.create({
         bottom: 10,
         left: 10
     },
+    inputField: {
+        height: 40, 
+        borderColor: 'gray', 
+        borderWidth: 1
+    },
     authError: {
         color: 'red',
         fontSize: 14

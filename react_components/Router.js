@@ -18,6 +18,10 @@ let RouteMap = {
         file: () => require('./screens/WelcomeSplashScreen'),
         title: 'Welcome'
     },
+    SignUp: {
+        file: () => require('./screens/SignUpScreen'),
+        title: 'Sign Up'
+    },
     RecordVideo: {
         file: () => require('./screens/VideoRecordingScreen'),
         title: 'Record Video'

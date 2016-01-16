@@ -1,7 +1,6 @@
 'use strict';
 
 let React = require('react-native'),
-    Camera = require('react-native-camera'),
     Router = require('../Router'),
     styles = require('../Styles');
 
