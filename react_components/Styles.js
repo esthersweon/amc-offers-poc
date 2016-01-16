@@ -25,7 +25,8 @@ let styles = StyleSheet.create({
       backgroundColor: '#F5FCFF',
     }, 
     postIt: {
-        backgroundColor: 'lightblue'
+        backgroundColor: 'lightblue',
+        padding: 10
     },
     // VideoRecordingScreen
     camera: {
@@ -79,6 +80,11 @@ let styles = StyleSheet.create({
     },
     closeModal: {
         justifyContent: 'flex-end'
+    },
+    signOut: {
+        position: 'absolute',
+        top: 10,
+        right: 20
     }
 });
 

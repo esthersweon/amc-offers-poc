@@ -2,6 +2,7 @@
 
 let React = require('react-native'),
     Router = require('../Router'),
+    auth = require('../api/auth'),
     styles = require('../Styles'),
     LoginModal = require('./LoginModal');
 
@@ -12,7 +13,6 @@ let {
     Animated,
     Dimensions
 } = React;
-
 
 let {
     height: deviceHeight
@@ -29,6 +29,9 @@ let WelcomeSplashScreen = React.createClass({
     componentDidMount() {
         // Set navigator to router
         Router.setNavigator(this.props.navigator);
+
+        auth.loggedIn()
+            .then((session)=> this.setState({ loggedIn: session }));
 
         Animated.timing(this.state.offset, {
             duration: 150,
@@ -49,30 +52,49 @@ let WelcomeSplashScreen = React.createClass({
         this.setState({modal: true});
     }, 
 
+    signIn() {
+        this.setState({ loggedIn: session });
+        console.log('CURRENT STATE : ',this.state);
+        Router.goTo('Questions');
+    },
+
+    signOut() {
+        auth.signOut();
+        this.setState({ loggedIn: null });
+    },
+
     render() {
         return (
             <View style={styles.container}>
+                <TouchableHighlight  style={ styles.signOut } onPress={ this.signOut }>
+                    <Text>Sign Out</Text>
+                </TouchableHighlight>
                 <Text>MINDSWARMS</Text>
+                {
+                    !this.state.loggedIn
+                        ? <View style={ styles.postIt }>
+                            <Text>Have an account?</Text> 
+                            <TouchableHighlight onPress={this.openModal}>
+                                <Text style={ styles.center }>Sign In</Text>
+                            </TouchableHighlight>
+
+                            <Text>Want to get paid for answer questions?</Text>
+                            <TouchableHighlight onPress={ Router.setRoute('SignUp') }>
+                                <Text style={ styles.center }>Sign Up</Text>
+                            </TouchableHighlight>
+
+                        </View>
+                        : null
+                }
                 <View style={ styles.postIt }>
-                    <Text>Have an account?</Text> 
-                    <TouchableHighlight onPress={this.openModal}>
-                        <Text style={ styles.center }>Sign In</Text>
-                    </TouchableHighlight>
-
-                    <Text>Want to get paid for answer questions?</Text>
-                    <TouchableHighlight onPress={ Router.setRoute('SignUp') }>
-                        <Text style={ styles.center }>Sign Up</Text>
-                    </TouchableHighlight>
-
                     <TouchableHighlight onPress={ Router.setRoute('RecordVideo') }>
                         <Text style={ styles.center }>Record Video</Text>
                     </TouchableHighlight>
                 </View>
-
                 {
                     this.state.modal 
                         ? <LoginModal closeModal={() => this.setState({modal: false})}
-                                signIn={ Router.setRoute('Question') }/>
+                                signIn={ this.signIn }/>
                         : null
                 }
             </View>

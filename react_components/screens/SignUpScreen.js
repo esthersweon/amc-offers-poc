@@ -8,8 +8,9 @@ let {
     ListView,
     Image,
     Text,
+    TextInput,
     View,
-    TouchableHighlight
+    TouchableOpacity,
 } = React;
 
 let SignUpScreen = React.createClass({

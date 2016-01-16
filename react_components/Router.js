@@ -15,20 +15,22 @@ let navigator;
 // can be defined here
 let RouteMap = {
     Home: {
-        file: () => require('./screens/WelcomeSplashScreen'),
+        sceneClass: () => require('./screens/WelcomeSplashScreen'),
         title: 'Welcome'
     },
     SignUp: {
-        file: () => require('./screens/SignUpScreen'),
+        sceneClass: () => require('./screens/SignUpScreen'),
         title: 'Sign Up'
     },
     RecordVideo: {
-        file: () => require('./screens/VideoRecordingScreen'),
-        title: 'Record Video'
+        sceneClass: () => require('./screens/VideoRecordingScreen'),
+        title: 'Record Video',
+        protected: true
     },
     Questions: {
-        file: () => require('./screens/QuestionScreen'),
-        title: 'Questions'
+        sceneClass: () => require('./screens/QuestionScreen'),
+        title: 'Questions',
+        protected: true
     }
 };
 
@@ -69,8 +71,10 @@ for (let route in RouteMap) {
     if (!Router.routes[route]) {
         Router.routes[route] = ()=> {
             return {
+                protected: Router.routes[route].protected,
+
                 getSceneClass() {
-                    return RouteMap[route].file();
+                    return RouteMap[route].sceneClass();
                 },
 
                 getTitle() {
