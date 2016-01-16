@@ -13,26 +13,27 @@ let navigator;
 
 // basic routes, requiring no customization, 
 // can be defined here
-import Welcome from './screens/WelcomeSplashScreen';
-import VideoRecording from './screens/VideoRecordingScreen';
-import Questions from './screens/QuestionScreen';
-
 let RouteMap = {
     Home: {
-        file: Welcome,
+        file: () => require('./screens/WelcomeSplashScreen'),
         title: 'Welcome'
     },
     RecordVideo: {
-        file: VideoRecording,
+        file: () => require('./screens/VideoRecordingScreen'),
         title: 'Record Video'
     },
     Questions: {
-        file: Questions,
+        file: () => require('./screens/QuestionScreen'),
         title: 'Questions'
     }
 }
 
 let Router = {
+    routes: {
+        // routes requiring more customization defined here
+        // DOCS: https://github.com/exponentjs/ex-navigator
+    },
+
     // set navigator based on screen (syntactic sugar)
     setNavigator(_navigator) {
         if (!navigator) {
@@ -53,10 +54,6 @@ let Router = {
 
         return this.routes[route].apply(this, arguments);
     },
-    routes: {
-        // routes requiring more customization defined here
-        // DOCS: https://github.com/exponentjs/ex-navigator
-    }    
 };
 
 // Syntactic sugar for generic routes defined in RouteMap
@@ -65,7 +62,7 @@ for (let route in RouteMap) {
         Router.routes[route] = ()=> {
             return {
                 getSceneClass() {
-                    return RouteMap[route].file;
+                    return RouteMap[route].file();
                 },
 
                 getTitle() {
@@ -76,6 +73,4 @@ for (let route in RouteMap) {
     }
 }
 
-console.log('Router', Router)
-
-export default Router;
+module.exports = Router;

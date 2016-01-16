@@ -1,7 +1,11 @@
 'use strict';
 
-let React = require('react-native');
-let Camera = require('react-native-camera');
+let React = require('react-native'),
+    Camera = require('react-native-camera'),
+    Router = require('../Router'),
+    styles = require('../Styles'),
+    LoginModal = require('./LoginModal');
+
 let {
     Text,
     View,
@@ -10,14 +14,10 @@ let {
     Dimensions
 } = React;
 
-import Router from '../Router';
-let styles = require('../Styles');
-let LoginModal = require('./LoginModal');
 
 let {
     height: deviceHeight
 } = Dimensions.get('window');
-
 
 let WelcomeSplashScreen = React.createClass({
     getInitialState() {
@@ -28,7 +28,6 @@ let WelcomeSplashScreen = React.createClass({
     },
 
     componentDidMount() {
-        console.log('router', Router);
         // Set navigator to router
         Router.setNavigator(this.props.navigator);
 
@@ -84,4 +83,4 @@ let WelcomeSplashScreen = React.createClass({
     }
 });
 
-export default WelcomeSplashScreen;
+module.exports = WelcomeSplashScreen;

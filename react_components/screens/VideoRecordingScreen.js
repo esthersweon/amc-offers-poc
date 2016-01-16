@@ -1,16 +1,16 @@
 'use strict';
 
-let React = require('react-native');
-let Camera = require('react-native-camera');
+let React = require('react-native'),
+    Camera = require('react-native-camera'),
+    Router = require('../Router'),
+    styles = require('../Styles');
+
 let {
     Text,
     View,
     TouchableHighlight
 } = React;
 
-import Router from '../Router';
-
-let styles = require('../Styles');
 let RecordButtonTexts = {
     RECORDING_STOPPED: 'Record',
     RECORDING_STARTED: 'Stop'
@@ -53,4 +53,4 @@ let VideoRecordingScreen = React.createClass({
     }
 });
 
-export default VideoRecordingScreen;
+module.exports = VideoRecordingScreen;

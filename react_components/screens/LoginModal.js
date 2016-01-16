@@ -2,9 +2,8 @@
 
 let React = require('react-native'),
     auth = require('../api/auth'),
+    Router = require('../Router'),
     styles = require('../Styles');
-
-import Router from '../Router';
 
 let {
     Text,
