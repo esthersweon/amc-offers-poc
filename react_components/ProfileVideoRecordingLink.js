@@ -13,7 +13,7 @@ let styles = require('./Styles'),
 let ProfileVideoRecordingLink = React.createClass({
 	render() {
 		return (
-			<TouchableHighlight onPress={()=> Router.goTo('RecordVideo')}>
+			<TouchableHighlight onPress={ Router.setRoute('RecordVideo') }>
                 <Text style={ styles.center }>Record Video</Text>
             </TouchableHighlight>
 		);

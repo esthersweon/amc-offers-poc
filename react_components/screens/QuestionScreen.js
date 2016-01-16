@@ -80,7 +80,7 @@ let QuestionScreen = React.createClass({
                     renderRow={this.renderAnswerChoice} 
                     style={styles.listView} />
 
-                <TouchableHighlight onPress={() => Router.goTo('RecordVideo')}>
+                <TouchableHighlight onPress={ Router.setRoute('RecordVideo') }>
                     <Text style={{textAlign: 'center'}}>{ this.state.videoAnswer ? 'Record Video Response' : ''}</Text>
                 </TouchableHighlight>  
             </View>

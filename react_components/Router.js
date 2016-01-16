@@ -26,7 +26,7 @@ let RouteMap = {
         file: () => require('./screens/QuestionScreen'),
         title: 'Questions'
     }
-}
+};
 
 let Router = {
     routes: {
@@ -44,6 +44,10 @@ let Router = {
     // go to a route (syntactic sugar)
     goTo(route) {
         navigator.push(Router.getRoute(route));
+    },
+
+    setRoute(route) {
+        return () => this.goTo(route);
     },
 
     // get object representing route

@@ -65,7 +65,7 @@ let WelcomeSplashScreen = React.createClass({
                         <Text style={ styles.center }>Sign Up</Text>
                     </TouchableHighlight>
 
-                    <TouchableHighlight onPress={()=> Router.goTo('RecordVideo')}>
+                    <TouchableHighlight onPress={ Router.setRoute('RecordVideo') }>
                         <Text style={ styles.center }>Record Video</Text>
                     </TouchableHighlight>
                 </View>
@@ -73,9 +73,7 @@ let WelcomeSplashScreen = React.createClass({
                 {
                     this.state.modal 
                         ? <LoginModal closeModal={() => this.setState({modal: false})}
-                                signIn={() =>
-                                  Router.goTo('Question')
-                                }/>
+                                signIn={ Router.setRoute('Question') }/>
                         : null
                 }
             </View>
