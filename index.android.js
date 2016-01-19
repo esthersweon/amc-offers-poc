@@ -30,14 +30,16 @@ class Component extends  React.Component {
     }
 
     render() {
-        return (
-            <View style={{ flex: 1 }}>
+        let navigationBarHeight = 64, 
+            sceneStyle = { paddingTop: navigationBarHeight },
+            flexStyle = { flex: 1 };
 
+        return (
+            <View style={ flexStyle }>
                 <ExNavigator
-                    initialRoute={Router.getRoute('Home')}
-                    style={{ flex: 1 }}
-                    sceneStyle={{ paddingTop: 64 }} />
-            
+                    initialRoute={ Router.getRoute('Home') }
+                    style={ flexStyle }
+                    sceneStyle={ sceneStyle } />
             </View>
         )
     }

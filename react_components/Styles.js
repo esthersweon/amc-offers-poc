@@ -11,8 +11,15 @@ let styles = StyleSheet.create({
         backgroundColor: '#F5FCFF'
     },
     title: {
-        flex: 1
-    },    
+        alignSelf: "stretch",
+        justifyContent: 'center',
+        paddingTop: 30, 
+        paddingRight: 75
+        // ^ need to fix/ temp fix
+    },
+    titleName: {
+        textAlign: 'center'
+    },  
     center: {
         textAlign: 'center'
     },
@@ -27,6 +34,13 @@ let styles = StyleSheet.create({
     postIt: {
         backgroundColor: 'lightblue',
         padding: 10
+    },
+    backButton: {
+        alignSelf: "stretch",
+        paddingTop: 30,
+    },
+    backButtonText: {
+        color: 'blue'
     },
     // VideoRecordingScreen
     camera: {

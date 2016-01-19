@@ -9,14 +9,15 @@ let {
     TouchableHighlight
 } = React;
 
+let NavButton = require('./NavButton');
 let navigator;
 
 // basic routes, requiring no customization, 
 // can be defined here
 let RouteMap = {
-    Home: {
-        sceneClass: () => require('./screens/WelcomeSplashScreen'),
-        title: 'Welcome'
+    SignIn: {
+        sceneClass: () => require('./screens/SignInScreen'),
+        title: 'Sign In'
     },
     SignUp: {
         sceneClass: () => require('./screens/SignUpScreen'),
@@ -36,6 +37,10 @@ let RouteMap = {
 
 let Router = {
     routes: {
+
+        Home: () => {
+            return { getSceneClass: () => require('./screens/WelcomeSplashScreen') };
+        },
         // routes requiring more customization defined here
         // DOCS: https://github.com/exponentjs/ex-navigator
         //       https://github.com/Thorbenandresen/ExNavigatorExample/blob/master/app/router.js
@@ -86,12 +91,24 @@ for (let route in RouteMap) {
                         </View>
                     );
                 },
-                renderRightButton() {
+                renderLeftButton() {
+                    let labelText = route == "SignUp" ? "Cancel" : "Back";
                     return (
-                        <Text onPress={() => { console.log('Tapped right button'); }}>
-                            Log
-                        </Text>
-                    );
+                        <NavButton 
+                            navigator={ navigator }
+                            labelText={ labelText }/>
+                    )
+                },
+                renderRightButton() {
+                    if (route == "SignUp") {
+                        return (
+                            <NavButton 
+                                navigator={ navigator }
+                                labelText="Right Btn"/>
+                        );
+                    } else {
+                        return null;
+                    };
                 },
                 getSceneClass() {
                     return currentRoute.sceneClass();
