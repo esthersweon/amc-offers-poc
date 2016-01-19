@@ -52,10 +52,10 @@ let WelcomeSplashScreen = React.createClass({
         this.setState({modal: true});
     }, 
 
-    signIn() {
+    signIn(session) {
         this.setState({ loggedIn: session });
+
         console.log('CURRENT STATE : ',this.state);
-        Router.goTo('Questions');
     },
 
     signOut() {

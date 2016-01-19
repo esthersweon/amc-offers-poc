@@ -46,22 +46,23 @@ let LoginModal = React.createClass({
     },
 
     signIn() {
-      let credentials = {
-        email: this.state.email,
-        password: this.state.password
-      };
+        let credentials = {
+          email: this.state.email,
+          password: this.state.password
+        };
 
-      auth
-        .login(credentials)
-        .then((result) => {
-          console.log('Auth success : ', result); // "Stuff worked!"
-          this.props.closeModal();
-          Router.goTo('Questions');
+        auth
+            .login(credentials)
+            .then((result) => {
+                console.log('Auth success : ', result); // "Stuff worked!"
+                this.props.closeModal();
+                this.props.signIn(result);
+                Router.goTo('Questions');
 
-        }, (err) => {
-          console.log('AUTH ERROR', err); // Error: "It broke"
-          this.state.authError = true;
-        });
+            }, (err) => {
+                console.log('AUTH ERROR', err); // Error: "It broke"
+                this.state.authError = true;
+            });
     },
 
     render() {
@@ -82,7 +83,7 @@ let LoginModal = React.createClass({
                     style={ styles.inputField }
                     onChangeText={(email) => this.setState({email})}
                     value={this.state.email} />
-                
+
                 <TextInput
                     autocorrect='false'
                     secureTextEntry={true}

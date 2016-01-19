@@ -38,6 +38,7 @@ let Router = {
     routes: {
         // routes requiring more customization defined here
         // DOCS: https://github.com/exponentjs/ex-navigator
+        //       https://github.com/Thorbenandresen/ExNavigatorExample/blob/master/app/router.js
     },
 
     // set navigator based on screen (syntactic sugar)
@@ -68,17 +69,36 @@ let Router = {
 
 // Syntactic sugar for generic routes defined in RouteMap
 for (let route in RouteMap) {
+    let currentRoute = RouteMap[route];
+
     if (!Router.routes[route]) {
         Router.routes[route] = ()=> {
             return {
-                protected: Router.routes[route].protected,
+                protected: currentRoute.protected,
 
+                // You can render arbitrary views for the title component. Note that you
+                // also need to implement getTitle if you want the title of this route to
+                // show up in the back button to it.
+                renderTitle() {
+                    return (
+                        <View style={styles.title}>
+                            <Text style={styles.titleName}>{currentRoute.title}</Text>
+                        </View>
+                    );
+                },
+                renderRightButton() {
+                    return (
+                        <Text onPress={() => { console.log('Tapped right button'); }}>
+                            Log
+                        </Text>
+                    );
+                },
                 getSceneClass() {
-                    return RouteMap[route].sceneClass();
+                    return currentRoute.sceneClass();
                 },
 
                 getTitle() {
-                    return RouteMap[route].title;
+                    return currentRoute.title;
                 }
             }
         }
