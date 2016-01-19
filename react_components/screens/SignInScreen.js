@@ -1,7 +1,9 @@
 'use strict';
 
 let React = require('react-native'),
+    auth = require('../api/auth'),
     Router = require('../Router'),
+    MessageMap = require('../MessageMap'),
     styles = require('../Styles');
 
 let {
@@ -15,12 +17,27 @@ let {
 
 let SignInScreen = React.createClass({
     getInitialState() {
-        return { authError: "Error" };
+        return { authError: false };
     },
 
     signIn() {
         // API call to sign user in
-        console.log("User signed in!");
+        let credentials = {
+          email: this.state.email,
+          password: this.state.password
+        };
+
+        auth
+            .login(credentials)
+            .then((result) => {
+                console.log('Auth success : ', result); // "Stuff worked!"
+
+                Router.goTo('Questions');
+
+            }, (err) => {
+                console.log('AUTH ERROR', err); // Error: "It broke"
+                this.state.authError = true;
+            });        
     },
 
     render() {
@@ -28,7 +45,7 @@ let SignInScreen = React.createClass({
             <View>
                 {
                   this.state.authError 
-                    ? <Text style={styles.authError}>Signup Error</Text>
+                    ? <Text style={styles.authError}>{ MessageMap.errors.signIn }</Text>
                     : null
                 }
                 <TextInput
@@ -49,7 +66,7 @@ let SignInScreen = React.createClass({
                     value={this.state.password} />
 
                 <TouchableOpacity onPress={this.signIn}>
-                    <Text style={{color: 'black',textAlign: 'center'}}>Sign In</Text>
+                    <Text style={{color: 'black',textAlign: 'center'}}>{ MessageMap.messages.signInButton }</Text>
                 </TouchableOpacity>              
             </View>
         )

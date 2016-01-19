@@ -31,6 +31,8 @@ let WelcomeSplashScreen = React.createClass({
         // Set navigator to router
         Router.setNavigator(this.props.navigator);
 
+        console.log('componentDidMount')
+
         auth.loggedIn()
             .then((session)=> this.setState({ loggedIn: session }));
 
@@ -38,12 +40,6 @@ let WelcomeSplashScreen = React.createClass({
             duration: 150,
             toValue: 0
         }).start();
-    },
-
-    signIn(session) {
-        this.setState({ loggedIn: session });
-
-        console.log('CURRENT STATE : ',this.state);
     },
 
     signOut() {
@@ -59,8 +55,7 @@ let WelcomeSplashScreen = React.createClass({
                 </TouchableHighlight>
                 <Text>mindswarms</Text>
                 <WelcomePostIt 
-                    loggedIn={ this.state.loggedIn } 
-                    openModal={ this.openModal } />
+                    loggedIn={ this.state.loggedIn } />
             </View>
         );
     }

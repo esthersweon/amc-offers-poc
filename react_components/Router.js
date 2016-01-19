@@ -81,6 +81,10 @@ for (let route in RouteMap) {
             return {
                 protected: currentRoute.protected,
 
+                onWillFocus(event) {
+                    console.log('onWillFocus', event.target._currentRoute);
+                    console.log('this', this);
+                },
                 // You can render arbitrary views for the title component. Note that you
                 // also need to implement getTitle if you want the title of this route to
                 // show up in the back button to it.
