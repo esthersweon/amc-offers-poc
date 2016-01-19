@@ -74,15 +74,7 @@ let styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     }, 
-    // modal
-    modal: {
-        backgroundColor: 'rgba(255,255,255,.9)',
-        position: 'absolute',
-        top: 10,
-        right: 10,
-        bottom: 10,
-        left: 10
-    },
+    // Sign In / Sign Up / Sign Out
     inputField: {
         height: 40, 
         borderColor: 'gray', 
@@ -91,9 +83,6 @@ let styles = StyleSheet.create({
     authError: {
         color: 'red',
         fontSize: 14
-    },
-    closeModal: {
-        justifyContent: 'flex-end'
     },
     signOut: {
         position: 'absolute',

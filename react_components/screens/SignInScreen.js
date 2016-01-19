@@ -12,7 +12,7 @@ let {
     Text,
     TextInput,
     View,
-    TouchableOpacity,
+    TouchableOpacity
 } = React;
 
 let SignInScreen = React.createClass({
@@ -65,9 +65,17 @@ let SignInScreen = React.createClass({
                     onChangeText={(password) => this.setState({password})}
                     value={this.state.password} />
 
-                <TouchableOpacity onPress={this.signIn}>
-                    <Text style={{color: 'black',textAlign: 'center'}}>{ MessageMap.messages.signInButton }</Text>
-                </TouchableOpacity>              
+                <View>
+                    <TouchableOpacity onPress={this.signIn}>
+                        <Text style={{color: 'black',textAlign: 'center'}}>Sign In</Text>
+                    </TouchableOpacity>
+                </View>  
+
+                <View>
+                    <TouchableOpacity onPress={ Router.setRoute('PasswordReset') }>
+                        <Text style={ styles.center }>Forgot Password?</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         )
     }

@@ -15,7 +15,7 @@ let {
 
 let SignUpScreen = React.createClass({
     getInitialState() {
-        return { authError: "Error" };
+        return { authError: null };
     },
 
     signUp() {
@@ -31,22 +31,145 @@ let SignUpScreen = React.createClass({
                     ? <Text style={styles.authError}>Signup Error</Text>
                     : null
                 }
-                <TextInput
-                    autocorrect='false'
-                    keyboardType='email-address'
-                    placeholder='email'
-                    style={ styles.inputField }
-                    onChangeText={(email) => this.setState({email})}
-                    value={this.state.email} />
+
+                <View>
+                    <Text>
+                        First Name
+                    </Text>
+                    
+                    <TextInput
+                        autocorrect='false'
+                        keyboardType='email-address'
+                        placeholder='email'
+                        style={ styles.inputField }
+                        onChangeText={(email) => this.setState({email})}
+                        value={this.state.email} />
+                </View>
+
+                <View>
+                    <Text>
+                        Last Name
+                    </Text>
+
+                    <TextInput
+                        autocorrect='false'
+                        keyboardType='email-address'
+                        placeholder='email'
+                        style={ styles.inputField }
+                        onChangeText={(email) => this.setState({email})}
+                        value={this.state.email} />
+                </View>
+
+                <View>
+                    <Text>
+                        Email Address
+                    </Text>
+                    <TextInput
+                        autocorrect='false'
+                        keyboardType='email-address'
+                        placeholder='email'
+                        style={ styles.inputField }
+                        onChangeText={(email) => this.setState({email})}
+                        value={this.state.email} />
+                </View>
                 
-                <TextInput
-                    autocorrect='false'
-                    secureTextEntry={true}
-                    keyboardType='default'
-                    placeholder='password'
-                    style={ styles.inputField }
-                    onChangeText={(password) => this.setState({password})}
-                    value={this.state.password} />
+                <View>
+                    <Text>
+                        Password
+                    </Text>
+                    <TextInput
+                        autocorrect='false'
+                        secureTextEntry={true}
+                        keyboardType='default'
+                        placeholder='password'
+                        style={ styles.inputField }
+                        onChangeText={(password) => this.setState({password})}
+                        value={this.state.password} />
+                </View>
+                
+                <View>
+                    <Text>
+                        Password Confirmation
+                    </Text>
+                    <TextInput
+                        autocorrect='false'
+                        secureTextEntry={true}
+                        keyboardType='default'
+                        placeholder='password'
+                        style={ styles.inputField }
+                        onChangeText={(password) => this.setState({password})}
+                        value={this.state.password} />
+                </View>
+                
+                <View>
+                    <Text>
+                        Country
+                    </Text>
+                    <TextInput
+                        autocorrect='false'
+                        keyboardType='email-address'
+                        placeholder='email'
+                        style={ styles.inputField }
+                        onChangeText={(email) => this.setState({email})}
+                        value={this.state.email} />
+                </View>
+                
+                <View>
+                    <Text>
+                        ZIP Code / Postal Code
+                    </Text>
+                    <TextInput
+                        autocorrect='false'
+                        keyboardType='email-address'
+                        placeholder='email'
+                        style={ styles.inputField }
+                        onChangeText={(email) => this.setState({email})}
+                        value={this.state.email} />
+                </View>
+
+                
+                <View>
+                    <Text>
+                        Gender
+                    </Text>
+                    <TextInput
+                        autocorrect='false'
+                        keyboardType='email-address'
+                        placeholder='email'
+                        style={ styles.inputField }
+                        onChangeText={(email) => this.setState({email})}
+                        value={this.state.email} />
+                </View>
+                <View>
+                    <Text>
+                        Birthdate
+                    </Text>
+                    <TextInput
+                        autocorrect='false'
+                        keyboardType='email-address'
+                        placeholder='email'
+                        style={ styles.inputField }
+                        onChangeText={(email) => this.setState({email})}
+                        value={this.state.email} />
+                </View>
+                <View>
+                    <Text>
+                        Phone Number
+                    </Text>
+                    <TextInput
+                        autocorrect='false'
+                        keyboardType='email-address'
+                        placeholder='email'
+                        style={ styles.inputField }
+                        onChangeText={(email) => this.setState({email})}
+                        value={this.state.email} />
+                </View>
+
+                <View>
+                    <Text>
+                        View Terms & Privacy Policy
+                    </Text>
+                </View>
 
                 <TouchableOpacity onPress={this.signUp}>
                     <Text style={{color: 'black',textAlign: 'center'}}>Sign Up</Text>

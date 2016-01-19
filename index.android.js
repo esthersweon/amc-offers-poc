@@ -24,11 +24,6 @@ class Component extends  React.Component {
         super(props)
     }
 
-    openModal() {
-        console.log("Hello from Open Modal");
-        this.setState({modal: true})
-    }
-
     render() {
         let navigationBarHeight = 64, 
             sceneStyle = { paddingTop: navigationBarHeight },
@@ -37,7 +32,7 @@ class Component extends  React.Component {
         return (
             <View style={ flexStyle }>
                 <ExNavigator
-                    initialRoute={ Router.getRoute('Home') }
+                    initialRoute={ Router.getRoute('Welcome') }
                     style={ flexStyle }
                     sceneStyle={ sceneStyle } />
             </View>

@@ -3,8 +3,7 @@
 let React = require('react-native'),
     Router = require('../Router'),
     auth = require('../api/auth'),
-    styles = require('../Styles'),
-    LoginModal = require('./LoginModal');
+    styles = require('../Styles');
 
 let {
     Text,

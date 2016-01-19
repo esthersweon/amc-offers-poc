@@ -15,17 +15,29 @@ let navigator;
 // basic routes, requiring no customization, 
 // can be defined here
 let RouteMap = {
+    Welcome: {
+        sceneClass: () => require('./screens/WelcomeSplashScreen'),
+        title: ''
+    },
     SignIn: {
         sceneClass: () => require('./screens/SignInScreen'),
-        title: 'Sign In'
+        title: 'Sign In', 
+        leftLabelText: 'Close'
     },
     SignUp: {
         sceneClass: () => require('./screens/SignUpScreen'),
-        title: 'Sign Up'
+        title: 'Sign Up', 
+        leftLabelText: 'Cancel'
+    },
+    PasswordReset: {
+        sceneClass: () => require('./screens/PasswordResetScreen'),
+        title: 'Password Reset', 
+        leftLabelText: 'Cancel'
     },
     RecordVideo: {
         sceneClass: () => require('./screens/VideoRecordingScreen'),
         title: 'Record Video',
+        leftLabelText: 'Back',
         protected: true
     },
     Questions: {
@@ -37,10 +49,6 @@ let RouteMap = {
 
 let Router = {
     routes: {
-
-        Home: () => {
-            return { getSceneClass: () => require('./screens/WelcomeSplashScreen') };
-        },
         // routes requiring more customization defined here
         // DOCS: https://github.com/exponentjs/ex-navigator
         //       https://github.com/Thorbenandresen/ExNavigatorExample/blob/master/app/router.js
@@ -96,23 +104,21 @@ for (let route in RouteMap) {
                     );
                 },
                 renderLeftButton() {
-                    let labelText = route == "SignUp" ? "Cancel" : "Back";
                     return (
                         <NavButton 
                             navigator={ navigator }
-                            labelText={ labelText }/>
+                            labelText={ currentRoute.leftLabelText }/>
                     )
                 },
                 renderRightButton() {
-                    if (route == "SignUp") {
+                    if (currentRoute.rightLabelText) {
                         return (
                             <NavButton 
                                 navigator={ navigator }
-                                labelText="Right Btn"/>
+                                labelText={ currentRoute.rightLabelText } />
                         );
-                    } else {
-                        return null;
-                    };
+                    } 
+                    return null;
                 },
                 getSceneClass() {
                     return currentRoute.sceneClass();
