@@ -23,7 +23,13 @@ let StudiesScreen = React.createClass({
     render() {
         return (
             <View>
-                { this.state.profileVideo ? <ProfileVideoRecordingLink /> : null }
+                { 
+                    this.state.profileVideo 
+                        ? <TouchableHighlight onPress={ Router.setRoute('RecordVideo') }>
+                            <Text style={ styles.center }>Record Video</Text>
+                        </TouchableHighlight>
+                        : null 
+                }
                 <StudiesList url={'current'} style={styles.container} />
                 <StudiesList url={'other'} style={styles.container} />
             </View>
