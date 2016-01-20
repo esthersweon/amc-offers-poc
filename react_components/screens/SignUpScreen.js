@@ -38,6 +38,7 @@ let SignUpScreen = React.createClass({
     },
 
     render() {
+        let consumer = this.state.consumer;
         return (
             <View>
                 {
@@ -56,8 +57,8 @@ let SignUpScreen = React.createClass({
                         keyboardType='default'
                         placeholder='First Name'
                         style={ styles.inputField }
-                        onChangeText={(first_name) => this.state.consumer.first_name = first_name}
-                        value={this.state.first_name} />
+                        onChangeText={ (first_name) => consumer.first_name = first_name }
+                        value={ consumer.first_name } />
                 </View>
 
                 <View>
@@ -70,8 +71,8 @@ let SignUpScreen = React.createClass({
                         keyboardType='default'
                         placeholder='Last Name'
                         style={ styles.inputField }
-                        onChangeText={(last_name) => this.state.consumer.last_name =  last_name }
-                        value={this.state.last_name} />
+                        onChangeText={ (last_name) => consumer.last_name =  last_name }
+                        value={ consumer.last_name } />
                 </View>
 
                 <View>
@@ -83,10 +84,10 @@ let SignUpScreen = React.createClass({
                         keyboardType='email-address'
                         placeholder='email'
                         style={ styles.inputField }
-                        onChangeText={(email) => this.state.consumer.email = email}
-                        value={this.state.email} />
+                        onChangeText={ (email) => consumer.email = email }
+                        value={ consumer.email } />
                 </View>
-                
+
                 <View>
                     <Text>
                         Password
@@ -97,10 +98,10 @@ let SignUpScreen = React.createClass({
                         keyboardType='default'
                         placeholder='password'
                         style={ styles.inputField }
-                        onChangeText={(password) => this.state.consumer.password = password}
-                        value={this.state.password} />
+                        onChangeText={ (password) => consumer.password = password }
+                        value={ consumer.password } />
                 </View>
-                
+
                 <View>
                     <Text>
                         Password Confirmation
@@ -111,10 +112,9 @@ let SignUpScreen = React.createClass({
                         keyboardType='default'
                         placeholder='password'
                         style={ styles.inputField }
-                        onChangeText={(password) => this.state.consumer.password_confirmation = password}
-                        value={this.state.password_confirmation} />
+                        onChangeText={ (password) => consumer.password_confirmation = password }
+                        value={ consumer.password_confirmation } />
                 </View>
-                
 
                 <View>
                     <Text>
