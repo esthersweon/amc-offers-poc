@@ -63,6 +63,15 @@ let styles = StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 50
     },
+    submitButton: {
+        position: 'absolute',
+        height: 50,
+        width: 50,
+        top: 20, 
+        right: 20,
+        backgroundColor: 'white',
+        borderRadius: 50
+    },    
     videoPrompt: {
         position: 'absolute',
         left: 50, top: 20, right: 50, 

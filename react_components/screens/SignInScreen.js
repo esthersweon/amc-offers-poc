@@ -28,9 +28,8 @@ let SignInScreen = React.createClass({
         };
 
         auth
-            .login(credentials)
+            .signIn(credentials)
             .then((result) => {
-                console.log('Auth success : ', result); // "Stuff worked!"
                 Router.goTo('Studies');
             }, (err) => {
                 console.log('AUTH ERROR', err); // Error: "It broke"
@@ -65,13 +64,13 @@ let SignInScreen = React.createClass({
 
                 <View>
                     <TouchableOpacity onPress={this.signIn}>
-                        <Text style={{color: 'black',textAlign: 'center'}}>Sign In</Text>
+                        <Text style={{color: 'black',textAlign: 'center'}}>{ MessageMap.buttons.signIn }</Text>
                     </TouchableOpacity>
                 </View>  
 
                 <View>
                     <TouchableOpacity onPress={ Router.setRoute('PasswordReset') }>
-                        <Text style={ styles.center }>Forgot Password?</Text>
+                        <Text style={ styles.center }>{ MessageMap.buttons.resetPassword }</Text>
                     </TouchableOpacity>
                 </View>
             </View>
