@@ -6,13 +6,13 @@ let React = require('react-native'),
     auth = require('../api/auth');
 
 let {
-    ListView,
-    Image,
     Text,
-    TextInput,
+    Switch,
     View,
-    TouchableOpacity,
+    TouchableOpacity
 } = React;
+
+let BottomNavBar = require('../BottomNavBar');
 
 let AccountScreen = React.createClass({
     getInitialState() {
@@ -26,25 +26,32 @@ let AccountScreen = React.createClass({
 
     signOut() {
         auth.signOut();
+        // this.setState somewhere to set state as { loggedIn: false }
         Router.setRoute('Welcome')
     },
 
     render() {
         return (
             <View>
+                <View>
+                    <TouchableOpacity onPress={Router.setRoute('EditAccount')}>
+                        <Text>Edit Account</Text>
+                    </TouchableOpacity>  
 
-                <TouchableOpacity onPress={Router.setRoute('EditAccount')}>
-                    <Text>Edit Account</Text>
-                </TouchableOpacity>  
+                    <TouchableOpacity onPress={Router.setRoute('ChangeProfilePicture')}>
+                        <Text>Change Profile Picture</Text>
+                    </TouchableOpacity>  
 
-                <TouchableOpacity onPress={Router.setRoute('ChangeProfilePicture')}>
-                    <Text>Change Profile Picture</Text>
-                </TouchableOpacity>  
+                    <TouchableOpacity onPress={ this.signOut }>
+                        <Text>Sign Out</Text>
+                    </TouchableOpacity>
 
-                <TouchableOpacity onPress={ this.signOut }>
-                    <Text>Sign Out</Text>
-                </TouchableOpacity>
-
+                    <View>
+                        <Text>Upload on Cellular</Text>
+                        <Switch />
+                    </View>
+                </View>
+                <BottomNavBar/>
             </View>
         )
     }

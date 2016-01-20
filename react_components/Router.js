@@ -32,12 +32,24 @@ let RouteMap = {
     PasswordReset: {
         sceneClass: () => require('./screens/PasswordResetScreen'),
         title: 'Password Reset', 
-        leftLabelText: 'Cancel'
+        leftLabelText: 'Cancel',
+        protected: true
     },
     NewPassword: {
         sceneClass: () => require('./screens/NewPasswordScreen'),
         title: 'Enter New Password', 
-        leftLabelText: ''
+        protected: true
+    },
+    Studies: {
+        sceneClass: () => require('./screens/StudiesScreen'),
+        title: 'Studies',
+        protected: true
+    },
+    ApplyForStudy: {
+        sceneClass: () => require('./screens/ApplyForStudyScreen'),
+        title: 'Apply For Study', 
+        leftLabelText: 'Cancel',
+        protected: true
     },
     RecordVideo: {
         sceneClass: () => require('./screens/VideoRecordingScreen'),
@@ -52,18 +64,21 @@ let RouteMap = {
     }, 
     Account: {
         sceneClass: () => require('./screens/AccountScreen'),
-        title: 'Account'
+        title: 'Account',
+        protected: true
     },
     EditAccount: {
         sceneClass: () => require('./screens/EditAccountScreen'),
         title: 'Edit Account', 
         leftLabelText: 'Cancel', 
-        rightLabelText: 'Save'
+        rightLabelText: 'Save',
+        protected: true
     },
     ChangeProfilePicture: {
         sceneClass: () => require('./screens/ChangeProfilePictureScreen'),
         title: 'Change Profile Picture', 
-        leftLabelText: ''
+        leftLabelText: '',
+        protected: true
     }
 };
 

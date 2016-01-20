@@ -13,6 +13,8 @@ let {
     TouchableOpacity,
 } = React;
 
+let BottomNavBar = require('../BottomNavBar');
+
 let PasswordResetScreen = React.createClass({
     getInitialState() {
         return { authError: "Email does not exist." };
@@ -26,25 +28,28 @@ let PasswordResetScreen = React.createClass({
     render() {
         return (
             <View>
-                {
-                  this.state.authError 
-                    ? <Text style={styles.authError}>{ this.state.authError }</Text>
-                    : null
-                }
                 <View>
-                    <Text>Email address</Text>
-                    <TextInput
-                        autocorrect='false'
-                        keyboardType='email-address'
-                        placeholder='email'
-                        style={ styles.inputField }
-                        onChangeText={(email) => this.setState({email})}
-                        value={this.state.email} />
-                </View>
+                    {
+                      this.state.authError 
+                        ? <Text style={styles.authError}>{ this.state.authError }</Text>
+                        : null
+                    }
+                    <View>
+                        <Text>Email address</Text>
+                        <TextInput
+                            autocorrect='false'
+                            keyboardType='email-address'
+                            placeholder='email'
+                            style={ styles.inputField }
+                            onChangeText={(email) => this.setState({email})}
+                            value={this.state.email} />
+                    </View>
 
-                <TouchableOpacity onPress={this.sendPasswordResetEmail}>
-                    <Text style={{color: 'black',textAlign: 'center'}}>Send</Text>
-                </TouchableOpacity>              
+                    <TouchableOpacity onPress={this.sendPasswordResetEmail}>
+                        <Text style={{color: 'black',textAlign: 'center'}}>Send</Text>
+                    </TouchableOpacity>              
+                </View>
+                <BottomNavBar/>
             </View>
         )
     }

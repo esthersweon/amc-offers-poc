@@ -9,6 +9,7 @@ let {
     Image,
     Text,
     TextInput,
+    ScrollView,
     View,
     TouchableOpacity,
 } = React;
@@ -25,7 +26,7 @@ let SignUpScreen = React.createClass({
 
     render() {
         return (
-            <View>
+            <ScrollView>
                 {
                   this.state.authError 
                     ? <Text style={styles.authError}>Signup Error</Text>
@@ -174,7 +175,7 @@ let SignUpScreen = React.createClass({
                 <TouchableOpacity onPress={this.signUp}>
                     <Text style={{color: 'black',textAlign: 'center'}}>Sign Up</Text>
                 </TouchableOpacity>              
-            </View>
+            </ScrollView>
         )
     }
 });

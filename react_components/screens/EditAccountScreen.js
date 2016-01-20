@@ -14,6 +14,8 @@ let {
     TouchableOpacity,
 } = React;
 
+let BottomNavBar = require('../BottomNavBar');
+
 let EditAccountScreen = React.createClass({
     getInitialState() {
         return { authError: "Password is not long enough." };
@@ -32,9 +34,10 @@ let EditAccountScreen = React.createClass({
     render() {
         return (
             <View>
-
-                <Text>Edit Account</Text>
-
+                <View>
+                    <Text>Edit Account</Text>
+                </View>
+                <BottomNavBar/>
             </View>
         )
     }

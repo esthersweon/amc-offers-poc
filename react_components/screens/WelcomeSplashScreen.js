@@ -39,17 +39,9 @@ let WelcomeSplashScreen = React.createClass({
         }).start();
     },
 
-    signOut() {
-        auth.signOut();
-        this.setState({ loggedIn: null });
-    },
-
     render() {
         return (
             <View style={styles.container}>
-                <TouchableHighlight  style={ styles.signOut } onPress={ this.signOut }>
-                    <Text>Sign Out</Text>
-                </TouchableHighlight>
                 <Text>mindswarms</Text>
                 <View style={ styles.postIt }>
                     {
@@ -71,6 +63,11 @@ let WelcomeSplashScreen = React.createClass({
                     <View>
                         <TouchableHighlight onPress={ Router.setRoute('Account') }>
                             <Text style={ styles.center }>Account</Text>
+                        </TouchableHighlight>
+                    </View>
+                    <View>
+                        <TouchableHighlight onPress={ Router.setRoute('Studies') }>
+                            <Text style={ styles.center }>Studies</Text>
                         </TouchableHighlight>
                     </View>
                     <View>
