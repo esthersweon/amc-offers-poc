@@ -31,9 +31,7 @@ let SignInScreen = React.createClass({
             .login(credentials)
             .then((result) => {
                 console.log('Auth success : ', result); // "Stuff worked!"
-
-                Router.goTo('Questions');
-
+                Router.goTo('Studies');
             }, (err) => {
                 console.log('AUTH ERROR', err); // Error: "It broke"
                 this.state.authError = true;

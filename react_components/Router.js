@@ -29,6 +29,11 @@ let RouteMap = {
         title: 'Sign Up', 
         leftLabelText: 'Cancel'
     },
+    TermsAndPrivacy: {
+        sceneClass: () => require('./screens/TermsAndPrivacyScreen'),
+        title: 'Terms and Privacy Policy', 
+        leftLabelText: 'Back'
+    },
     PasswordReset: {
         sceneClass: () => require('./screens/PasswordResetScreen'),
         title: 'Password Reset', 

@@ -12,6 +12,7 @@ let {
     ScrollView,
     View,
     TouchableOpacity,
+    TouchableHighlight
 } = React;
 
 let SignUpScreen = React.createClass({
@@ -166,11 +167,11 @@ let SignUpScreen = React.createClass({
                         value={this.state.email} />
                 </View>
 
-                <View>
+                <TouchableHighlight onPress={ Router.setRoute('TermsAndPrivacy') }>
                     <Text>
                         View Terms & Privacy Policy
                     </Text>
-                </View>
+                </TouchableHighlight>
 
                 <TouchableOpacity onPress={this.signUp}>
                     <Text style={{color: 'black',textAlign: 'center'}}>Sign Up</Text>
