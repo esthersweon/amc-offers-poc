@@ -34,6 +34,11 @@ let RouteMap = {
         title: 'Password Reset', 
         leftLabelText: 'Cancel'
     },
+    NewPassword: {
+        sceneClass: () => require('./screens/NewPasswordScreen'),
+        title: 'Enter New Password', 
+        leftLabelText: ''
+    },
     RecordVideo: {
         sceneClass: () => require('./screens/VideoRecordingScreen'),
         title: 'Record Video',
@@ -44,6 +49,21 @@ let RouteMap = {
         sceneClass: () => require('./screens/QuestionScreen'),
         title: 'Questions',
         protected: true
+    }, 
+    Account: {
+        sceneClass: () => require('./screens/AccountScreen'),
+        title: 'Account', 
+        leftLabelText: ''
+    },
+    EditAccount: {
+        sceneClass: () => require('./screens/EditAccountScreen'),
+        title: 'Edit Account', 
+        leftLabelText: ''
+    },
+    ChangeProfilePicture: {
+        sceneClass: () => require('./screens/ChangeProfilePictureScreen'),
+        title: 'Change Profile Picture', 
+        leftLabelText: ''
     }
 };
 

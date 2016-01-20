@@ -13,14 +13,14 @@ let {
     TouchableOpacity,
 } = React;
 
-let PasswordResetScreen = React.createClass({
+let NewPasswordScreen = React.createClass({
     getInitialState() {
-        return { authError: "Email does not exist." };
+        return { authError: "Password is not long enough." };
     },
 
     sendPasswordResetEmail() {
         // API call to sign user in
-        console.log("Password reset email sent!");
+        console.log("New password set!");
     },
 
     render() {
@@ -32,14 +32,24 @@ let PasswordResetScreen = React.createClass({
                     : null
                 }
                 <View>
-                    <Text>Email address</Text>
+                    <Text>New Password</Text>
                     <TextInput
                         autocorrect='false'
-                        keyboardType='email-address'
-                        placeholder='email'
+                        keyboardType='password'
+                        placeholder='password'
                         style={ styles.inputField }
-                        onChangeText={(email) => this.setState({email})}
-                        value={this.state.email} />
+                        onChangeText={(password) => this.setState({password})}
+                        value={this.state.password} />
+                </View>
+                <View>
+                    <Text>Confirm New Password</Text>
+                    <TextInput
+                        autocorrect='false'
+                        keyboardType='password'
+                        placeholder='password'
+                        style={ styles.inputField }
+                        onChangeText={(password) => this.setState({passwordConfirmation})}
+                        value={this.state.passwordConfirmation} />
                 </View>
 
                 <TouchableOpacity onPress={this.sendPasswordResetEmail}>
@@ -50,4 +60,4 @@ let PasswordResetScreen = React.createClass({
     }
 });
 
-module.exports = PasswordResetScreen;
+module.exports = NewPasswordScreen;
