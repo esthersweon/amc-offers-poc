@@ -52,13 +52,13 @@ let RouteMap = {
     }, 
     Account: {
         sceneClass: () => require('./screens/AccountScreen'),
-        title: 'Account', 
-        leftLabelText: ''
+        title: 'Account'
     },
     EditAccount: {
         sceneClass: () => require('./screens/EditAccountScreen'),
         title: 'Edit Account', 
-        leftLabelText: ''
+        leftLabelText: 'Cancel', 
+        rightLabelText: 'Save'
     },
     ChangeProfilePicture: {
         sceneClass: () => require('./screens/ChangeProfilePictureScreen'),

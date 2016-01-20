@@ -17,8 +17,6 @@ let {
     height: deviceHeight
 } = Dimensions.get('window');
 
-let WelcomePostIt = require('../WelcomePostIt');
-
 let WelcomeSplashScreen = React.createClass({
     getInitialState() {
         return {
@@ -53,8 +51,34 @@ let WelcomeSplashScreen = React.createClass({
                     <Text>Sign Out</Text>
                 </TouchableHighlight>
                 <Text>mindswarms</Text>
-                <WelcomePostIt 
-                    loggedIn={ this.state.loggedIn } />
+                <View style={ styles.postIt }>
+                    {
+                        !this.state.loggedIn
+                            ? <View>
+                                <Text>Have an account?</Text> 
+                                <TouchableHighlight onPress={ Router.setRoute('SignIn') }>
+                                    <Text style={ styles.center }>Sign In</Text>
+                                </TouchableHighlight>
+
+                                <Text>Want to get paid for answer questions?</Text>
+                                <TouchableHighlight onPress={ Router.setRoute('SignUp') }>
+                                    <Text style={ styles.center }>Sign Up</Text>
+                                </TouchableHighlight>
+
+                            </View>
+                            : null
+                    }
+                    <View>
+                        <TouchableHighlight onPress={ Router.setRoute('Account') }>
+                            <Text style={ styles.center }>Account</Text>
+                        </TouchableHighlight>
+                    </View>
+                    <View>
+                        <TouchableHighlight onPress={ Router.setRoute('RecordVideo') }>
+                            <Text style={ styles.center }>Record Video</Text>
+                        </TouchableHighlight>
+                    </View>
+                </View>
             </View>
         );
     }

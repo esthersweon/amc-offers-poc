@@ -26,18 +26,18 @@ let AccountScreen = React.createClass({
 
     signOut() {
         auth.signOut();
-        Router.getRoute('Welcome')
+        Router.setRoute('Welcome')
     },
 
     render() {
         return (
             <View>
 
-                <TouchableOpacity onPress={Router.getRoute('EditAccount')}>
+                <TouchableOpacity onPress={Router.setRoute('EditAccount')}>
                     <Text>Edit Account</Text>
                 </TouchableOpacity>  
 
-                <TouchableOpacity onPress={Router.getRoute('ChangeProfilePicture')}>
+                <TouchableOpacity onPress={Router.setRoute('ChangeProfilePicture')}>
                     <Text>Change Profile Picture</Text>
                 </TouchableOpacity>  
 
