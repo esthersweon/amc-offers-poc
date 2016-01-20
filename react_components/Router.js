@@ -9,7 +9,7 @@ let {
     TouchableHighlight
 } = React;
 
-let NavButton = require('./NavButton');
+let TopNavButton = require('./TopNavButton');
 let navigator;
 
 // basic routes, requiring no customization, 
@@ -145,7 +145,7 @@ for (let route in RouteMap) {
                 },
                 renderLeftButton() {
                     return (
-                        <NavButton 
+                        <TopNavButton 
                             navigator={ navigator }
                             labelText={ currentRoute.leftLabelText }/>
                     )
@@ -153,7 +153,7 @@ for (let route in RouteMap) {
                 renderRightButton() {
                     if (currentRoute.rightLabelText) {
                         return (
-                            <NavButton 
+                            <TopNavButton 
                                 navigator={ navigator }
                                 labelText={ currentRoute.rightLabelText } />
                         );
