@@ -9,7 +9,7 @@ let {
     TouchableHighlight
 } = React;
 
-let NavButton = require('./NavButton');
+let TopNavButton = require('./TopNavButton');
 let navigator;
 
 // basic routes, requiring no customization, 
@@ -29,10 +29,32 @@ let RouteMap = {
         title: 'Sign Up', 
         leftLabelText: 'Cancel'
     },
+    TermsAndPrivacy: {
+        sceneClass: () => require('./screens/TermsAndPrivacyScreen'),
+        title: 'Terms and Privacy Policy', 
+        leftLabelText: 'Back'
+    },
     PasswordReset: {
         sceneClass: () => require('./screens/PasswordResetScreen'),
         title: 'Password Reset', 
-        leftLabelText: 'Cancel'
+        leftLabelText: 'Cancel',
+        protected: true
+    },
+    NewPassword: {
+        sceneClass: () => require('./screens/NewPasswordScreen'),
+        title: 'Enter New Password', 
+        protected: true
+    },
+    Studies: {
+        sceneClass: () => require('./screens/StudiesScreen'),
+        title: 'Studies',
+        protected: true
+    },
+    ApplyForStudy: {
+        sceneClass: () => require('./screens/ApplyForStudyScreen'),
+        title: 'Apply For Study', 
+        leftLabelText: 'Cancel',
+        protected: true
     },
     RecordVideo: {
         sceneClass: () => require('./screens/VideoRecordingScreen'),
@@ -43,6 +65,24 @@ let RouteMap = {
     Questions: {
         sceneClass: () => require('./screens/QuestionScreen'),
         title: 'Questions',
+        protected: true
+    }, 
+    Account: {
+        sceneClass: () => require('./screens/AccountScreen'),
+        title: 'Account',
+        protected: true
+    },
+    EditAccount: {
+        sceneClass: () => require('./screens/EditAccountScreen'),
+        title: 'Edit Account', 
+        leftLabelText: 'Cancel', 
+        rightLabelText: 'Save',
+        protected: true
+    },
+    ChangeProfilePicture: {
+        sceneClass: () => require('./screens/ChangeProfilePictureScreen'),
+        title: 'Change Profile Picture', 
+        leftLabelText: '',
         protected: true
     }
 };
@@ -105,7 +145,7 @@ for (let route in RouteMap) {
                 },
                 renderLeftButton() {
                     return (
-                        <NavButton 
+                        <TopNavButton 
                             navigator={ navigator }
                             labelText={ currentRoute.leftLabelText }/>
                     )
@@ -113,7 +153,7 @@ for (let route in RouteMap) {
                 renderRightButton() {
                     if (currentRoute.rightLabelText) {
                         return (
-                            <NavButton 
+                            <TopNavButton 
                                 navigator={ navigator }
                                 labelText={ currentRoute.rightLabelText } />
                         );

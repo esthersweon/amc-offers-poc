@@ -12,6 +12,8 @@ let {
     TouchableHighlight
 } = React;
 
+let BottomNavBar = require('../BottomNavBar');
+
 let QuestionScreen = React.createClass({
     getInitialState() {
         return {
@@ -73,15 +75,18 @@ let QuestionScreen = React.createClass({
         }  
         return (
             <View>
-                <Text>{ this.state.question }</Text>
-                <ListView 
-                    dataSource={ this.state.answerChoices }
-                    renderRow={this.renderAnswerChoice} 
-                    style={styles.listView} />
+                <View>
+                    <Text>{ this.state.question }</Text>
+                    <ListView 
+                        dataSource={ this.state.answerChoices }
+                        renderRow={this.renderAnswerChoice} 
+                        style={styles.listView} />
 
-                <TouchableHighlight onPress={ Router.setRoute('RecordVideo') }>
-                    <Text style={{textAlign: 'center'}}>{ this.state.videoAnswer ? 'Record Video Response' : ''}</Text>
-                </TouchableHighlight>  
+                    <TouchableHighlight onPress={ Router.setRoute('RecordVideo') }>
+                        <Text style={{textAlign: 'center'}}>{ this.state.videoAnswer ? 'Record Video Response' : ''}</Text>
+                    </TouchableHighlight>  
+                </View>
+                <BottomNavBar/>
             </View>
         );
     }

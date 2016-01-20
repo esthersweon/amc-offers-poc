@@ -3,15 +3,17 @@
 let React = require('react-native');
 let {
     ListView,
-    Platform,
+    TouchableHighlight,
     Text,
+    ScrollView,
     View
 } = React;
 
-let styles = require('../Styles');
+let styles = require('../Styles'),
+    Router = require('../Router');
 
-let ProfileVideoRecordingLink = require('../ProfileVideoRecordingLink'),
-    StudiesList = require('../StudiesList');
+let StudiesList = require('../StudiesList'), 
+    BottomNavBar = require('../BottomNavBar');
 
 let StudiesScreen = React.createClass({
     getInitialState() {
@@ -22,11 +24,30 @@ let StudiesScreen = React.createClass({
     },
     render() {
         return (
-            <View>
-                { this.state.profileVideo ? <ProfileVideoRecordingLink /> : null }
-                <StudiesList url={'current'} style={styles.container} />
-                <StudiesList url={'other'} style={styles.container} />
-            </View>
+            <ScrollView>
+                { 
+                    this.state.profileVideo 
+                        ? <TouchableHighlight onPress={ Router.setRoute('RecordVideo') }>
+                            <Text style={ styles.center }>Record Video</Text>
+                        </TouchableHighlight>
+                        : null 
+                }
+                <View>
+                    <Text>Respond</Text>
+                    <StudiesList url={'accepted'} style={styles.container} />
+                </View>
+
+                <View>
+                    <Text>Apply</Text>
+                    <StudiesList url={'for_you'} style={styles.container} />
+                </View>
+
+                <View>
+                    <Text>Refer Friends</Text>
+                    <StudiesList url={'for_friends'} style={styles.container} />
+                </View>
+                <BottomNavBar/>
+            </ScrollView>
         );
     }
 });
