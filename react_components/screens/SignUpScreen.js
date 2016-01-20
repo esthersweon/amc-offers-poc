@@ -2,6 +2,7 @@
 
 let React = require('react-native'),
     Router = require('../Router'),
+    auth = require('../api/auth'),
     styles = require('../Styles');
 
 let {
@@ -15,12 +16,25 @@ let {
 
 let SignUpScreen = React.createClass({
     getInitialState() {
-        return { authError: null };
+        return {
+            consumer: {},
+            authError: null
+        };
     },
 
     signUp() {
-        // API call to create new user
-        console.log("User created!");
+        let credentials = { consumer: this.state.consumer };
+        console.log('consumer!', credentials);
+
+        auth
+            .signUp(credentials)
+            .then((result) => {
+                console.log("User created!", result);
+                Router.goTo('Questions');
+            }, (err) => {
+                console.log('AUTH ERROR', err);
+                this.setState({ authError: true });
+            });  
     },
 
     render() {
@@ -39,11 +53,11 @@ let SignUpScreen = React.createClass({
                     
                     <TextInput
                         autocorrect='false'
-                        keyboardType='email-address'
-                        placeholder='email'
+                        keyboardType='default'
+                        placeholder='First Name'
                         style={ styles.inputField }
-                        onChangeText={(email) => this.setState({email})}
-                        value={this.state.email} />
+                        onChangeText={(first_name) => this.state.consumer.first_name = first_name}
+                        value={this.state.first_name} />
                 </View>
 
                 <View>
@@ -53,11 +67,11 @@ let SignUpScreen = React.createClass({
 
                     <TextInput
                         autocorrect='false'
-                        keyboardType='email-address'
-                        placeholder='email'
+                        keyboardType='default'
+                        placeholder='Last Name'
                         style={ styles.inputField }
-                        onChangeText={(email) => this.setState({email})}
-                        value={this.state.email} />
+                        onChangeText={(last_name) => this.state.consumer.last_name =  last_name }
+                        value={this.state.last_name} />
                 </View>
 
                 <View>
@@ -69,7 +83,7 @@ let SignUpScreen = React.createClass({
                         keyboardType='email-address'
                         placeholder='email'
                         style={ styles.inputField }
-                        onChangeText={(email) => this.setState({email})}
+                        onChangeText={(email) => this.state.consumer.email = email}
                         value={this.state.email} />
                 </View>
                 
@@ -83,7 +97,7 @@ let SignUpScreen = React.createClass({
                         keyboardType='default'
                         placeholder='password'
                         style={ styles.inputField }
-                        onChangeText={(password) => this.setState({password})}
+                        onChangeText={(password) => this.state.consumer.password = password}
                         value={this.state.password} />
                 </View>
                 
@@ -97,73 +111,10 @@ let SignUpScreen = React.createClass({
                         keyboardType='default'
                         placeholder='password'
                         style={ styles.inputField }
-                        onChangeText={(password) => this.setState({password})}
-                        value={this.state.password} />
+                        onChangeText={(password) => this.state.consumer.password_confirmation = password}
+                        value={this.state.password_confirmation} />
                 </View>
                 
-                <View>
-                    <Text>
-                        Country
-                    </Text>
-                    <TextInput
-                        autocorrect='false'
-                        keyboardType='email-address'
-                        placeholder='email'
-                        style={ styles.inputField }
-                        onChangeText={(email) => this.setState({email})}
-                        value={this.state.email} />
-                </View>
-                
-                <View>
-                    <Text>
-                        ZIP Code / Postal Code
-                    </Text>
-                    <TextInput
-                        autocorrect='false'
-                        keyboardType='email-address'
-                        placeholder='email'
-                        style={ styles.inputField }
-                        onChangeText={(email) => this.setState({email})}
-                        value={this.state.email} />
-                </View>
-
-                
-                <View>
-                    <Text>
-                        Gender
-                    </Text>
-                    <TextInput
-                        autocorrect='false'
-                        keyboardType='email-address'
-                        placeholder='email'
-                        style={ styles.inputField }
-                        onChangeText={(email) => this.setState({email})}
-                        value={this.state.email} />
-                </View>
-                <View>
-                    <Text>
-                        Birthdate
-                    </Text>
-                    <TextInput
-                        autocorrect='false'
-                        keyboardType='email-address'
-                        placeholder='email'
-                        style={ styles.inputField }
-                        onChangeText={(email) => this.setState({email})}
-                        value={this.state.email} />
-                </View>
-                <View>
-                    <Text>
-                        Phone Number
-                    </Text>
-                    <TextInput
-                        autocorrect='false'
-                        keyboardType='email-address'
-                        placeholder='email'
-                        style={ styles.inputField }
-                        onChangeText={(email) => this.setState({email})}
-                        value={this.state.email} />
-                </View>
 
                 <View>
                     <Text>

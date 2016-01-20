@@ -3,6 +3,8 @@
 let React = require('react-native'),
     Camera = require('react-native-camera'),
     Router = require('../Router'),
+    MessageMap = require('../MessageMap'),    
+    video = require('../api/video'),
     styles = require('../Styles');
 
 let {
@@ -31,6 +33,11 @@ let VideoRecordingScreen = React.createClass({
             this.setState({ recordingMsg });
         });
     },
+    submitVideo(event) {
+        console.log('submitVideo in recording screen', event);
+        var file = {};
+        video.submit(file);        
+    },
     render() {
         return (
             <View style={ styles.container }>
@@ -46,7 +53,11 @@ let VideoRecordingScreen = React.createClass({
                 </TouchableHighlight>
 
                 <TouchableHighlight style={ styles.switchButton } onPress={ this.switchCamera }>
-                    <Text style={ styles.center }>Switch</Text>
+                    <Text style={ styles.center }>{ MessageMap.buttons.switchCamera }</Text>
+                </TouchableHighlight>
+
+                <TouchableHighlight style={ styles.submitButton } onPress={ this.submitVideo }>
+                    <Text style={ styles.center }>{ MessageMap.buttons.submitVideo }</Text>
                 </TouchableHighlight>
             </View>
         );

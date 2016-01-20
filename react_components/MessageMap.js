@@ -1,11 +1,13 @@
 let MessageMap = {
-    messages: {
-        signInButton: 'Sign In'
+    buttons: {
+        signIn: 'Sign In',
+        resetPassword: 'Forgot Password?',
+        submitVideo: 'Submit Video',
+        switchCamera: 'Switch'
     },
 
     errors: {
         signIn: 'Incorrect email / password combination',
-
     }
 };
 
